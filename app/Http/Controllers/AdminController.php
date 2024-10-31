@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -52,5 +53,27 @@ class AdminController extends Controller
     public function add_product() {
         $categories = Category::all();
         return view('admin.add_product', compact('categories'));
+    }
+
+    public function upload_product(Request $request) {
+        $product = new Product;
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->qty;
+        $product->category = $request->category;
+
+        // Saving the image
+        $image = $request->image;
+        if ($image){
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $request->image->move('products', $imagename);
+
+            $product->image = $imagename;
+        }
+
+        $product->save();
+
+        return redirect()->back();
     }
 }
