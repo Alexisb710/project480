@@ -6,6 +6,7 @@
   <body>
     <!-- Header -->
     @include('admin.header')
+    
     <div class="d-flex align-items-stretch">
       <!-- Sidebar Navigation-->
       @include('admin.sidebar')
