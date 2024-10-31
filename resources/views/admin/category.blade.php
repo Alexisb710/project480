@@ -47,7 +47,7 @@
         <div class="page-content">
           <div class="page-header">
             <div class="container-fluid">
-              <h2 style="color: white;">Add Category</h2>
+              <h1 style="color: white;">Add Category</h1>
               <div class="div_design">
                 <form action="{{ url('add_category') }}" method="post">
                   @csrf
