@@ -25,17 +25,19 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <div class="page-header">
+          <div class="container-fluid">
 
-          <h1>Update Category</h1>
-
-          <div class="div_design">
-            
-            <form action="{{url('update_category', $data->id)}}" method="post">
-              @csrf
-                <input type="text" name="category" value="{{$data->category_name}}">
-                <input type="submit" value="Update Category" class="btn btn-primary">
-            </form>
-
+            <h1 style="color:white;">Update Category</h1>
+  
+            <div class="div_design">
+              
+              <form action="{{url('update_category', $data->id)}}" method="post">
+                @csrf
+                  <input type="text" name="category" value="{{$data->category_name}}">
+                  <input type="submit" value="Update Category" class="btn btn-primary">
+              </form>
+  
+            </div>
           </div>
 
       </div>

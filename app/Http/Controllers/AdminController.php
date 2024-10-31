@@ -48,4 +48,9 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+
+    public function add_product() {
+        $categories = Category::all();
+        return view('admin.add_product', compact('categories'));
+    }
 }
