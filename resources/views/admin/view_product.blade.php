@@ -2,6 +2,14 @@
 <html>
   <head> 
     @include('admin.css')
+
+    <style type="text/css">
+      .div_design{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -14,10 +22,32 @@
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
-            @include('admin.body')
+            
+            <div class="div_design">
+              <table>
+                <tr>
+                  <th>Product Title</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Image</th>
+                </tr>
+
+                <tr>
+                  <td>abc</td>
+                  <td>abc</td>
+                  <td>abc</td>
+                  <td>abc</td>
+                  <td>abc</td>
+                  <td>abc</td>
+                </tr>
+              </table>
+            </div>
+
           </div>
+        </div>
       </div>
-    </div>
     <!-- JavaScript files-->
     <script src="{{asset('admincss/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('admincss/vendor/popper.js/umd/popper.min.js')}}"> </script>

@@ -19,7 +19,7 @@ class AdminController extends Controller
         $category->category_name = $request->category;
         $category->save();
 
-        toastr()->timeOut(3000)->closeButton()->success('Category Added Successfully!');
+        toastr()->timeOut(5000)->closeButton()->success('Category Added Successfully!');
 
         return redirect()->back();
     }
@@ -35,7 +35,7 @@ class AdminController extends Controller
         $data->category_name = $request->category;
         $data->save();
 
-        toastr()->timeOut(3000)->closeButton()->success('Category Updated Successfully!');
+        toastr()->timeOut(5000)->closeButton()->success('Category Updated Successfully!');
 
 
         return redirect('/view_category');
@@ -45,7 +45,7 @@ class AdminController extends Controller
         $data = Category::find($id);
         $data->delete();
 
-        toastr()->timeOut(4000)->closeButton()->success('Category Deleted Successfully');
+        toastr()->timeOut(5000)->closeButton()->success('Category Deleted Successfully');
 
         return redirect()->back();
     }
@@ -71,9 +71,15 @@ class AdminController extends Controller
 
             $product->image = $imagename;
         }
-
         $product->save();
 
+        toastr()->timeOut(5000)->closeButton()->success('Product Added Successfully');
+
         return redirect()->back();
+    }
+
+    public function view_product(){
+        $product = Product::all();
+        return view('admin.view_product', compact('product'));
     }
 }
