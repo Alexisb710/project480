@@ -24,11 +24,12 @@
         }
 
         th {
-          background-color: rgb(86, 119, 132);
+          background-color: #73D3FF;
           padding: 15px;
           font-size: 20px;
           font-weight: bold;
-          color: white;
+          color: #101010;
+          border: 1px solid lightcyan;
         }
         td{
           color: white;
@@ -93,7 +94,7 @@
         console.log(urlToRedirect);
 
         swal({
-          title: "Are you sure you want to Delete this?",
+          title: "Are you sure?",
           text: "This Delete will be permanent",
           icon: "warning",
           buttons: true,
