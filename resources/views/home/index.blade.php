@@ -3,6 +3,14 @@
 
 <head>
   @include('home.css')
+
+  <style type='text/css'>
+    .logout {
+      margin-left: 5px;
+      margin-right: 25px;
+      color: black;
+    }
+  </style>
 </head>
 
 <body>

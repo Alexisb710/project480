@@ -31,6 +31,12 @@
         text-align: center;
         color: white;
       }
+
+      input[type='search'] {
+        width: 500px;
+        height: 60px;
+        margin-left: 50px;
+      }
     </style>
   </head>
   <body>
@@ -45,6 +51,14 @@
         <div class="page-header">
           <div class="container-fluid">
             <h1>Products</h1>
+
+            <form action="{{url('product_search')}}" method="get">
+              @csrf
+              <input type="search" name="search">
+              <input type="submit" class="btn btn-secondary" value="Search">
+              <a href="{{url('view_product')}}" class="btn btn-secondary">Reset</a>
+            </form>
+            
             <div class="div_design">
               <table class="table_design">
                 <tr>

@@ -34,29 +34,37 @@
           </li>
         </ul>
         <div class="user_option">
-            {{-- Authentication --}}
-            {{-- Login --}}
-          <a href="{{route('login')}}">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <span>
-              Login
-            </span>
-          </a>
-          {{-- Register --}}
-          <a href="{{route('register')}}">
-            <i class="fa fa-vcard" aria-hidden="true"></i>
-            <span>
-              Register
-            </span>
-          </a>
-          <a href="">
-            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-          </a>
-          <form class="form-inline ">
-            <button class="btn nav_search-btn" type="submit">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
+          @if (Route::has('login'))
+
+            @auth
+
+              <a href="">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              </a>
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <input class="logout btn btn-light" type="submit" value="Logout">
+              </form>
+            
+            @else
+              {{-- Authentication --}}
+              {{-- Login --}}
+              <a href="{{route('login')}}">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span>
+                  Login
+                </span>
+              </a>
+              {{-- Register --}}
+              <a href="{{route('register')}}">
+                <i class="fa fa-vcard" aria-hidden="true"></i>
+                <span>
+                  Register
+                </span>
+              </a>
+            @endauth
+          @endif
+          
         </div>
       </div>
     </nav>

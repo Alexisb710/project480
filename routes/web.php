@@ -8,7 +8,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [HomeController::class, 'home']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('home.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -54,4 +54,7 @@ Route::get('edit_product/{id}', [AdminController::class, 'edit_product'])
         ->middleware(['auth', 'admin']);
 
 Route::post('update_product/{id}', [AdminController::class, 'update_product'])
+        ->middleware(['auth', 'admin']);
+
+Route::get('product_search', [AdminController::class, 'product_search'])
         ->middleware(['auth', 'admin']);
