@@ -16,4 +16,9 @@ class HomeController extends Controller
         return view('home.index', compact('products'));
     }
 
+    // public function login_home() {
+    //     $products = Product::all();
+    //     return view('home.index', compact('products'));
+    // }
+
 }

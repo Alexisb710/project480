@@ -6,31 +6,28 @@
       </h2>
     </div>
     <div class="row">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="box">
-          <a href="">
-            <div class="img-box">
-              <img src="images/p1.png" alt="">
-            </div>
-            <div class="detail-box">
-              <h6>
-                Ring
-              </h6>
-              <h6>
-                Price
-                <span>
-                  $200
-                </span>
-              </h6>
-            </div>
-            <div class="new">
-              <span>
-                New
-              </span>
-            </div>
-          </a>
+      @foreach ($products as $product) 
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="products/{{$product->image}}">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  {{$product->title}}
+                </h6>
+                <h6>
+                  Price
+                  <span>
+                    ${{$product->price}}
+                  </span>
+                </h6>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
+      @endforeach
       
       
       
