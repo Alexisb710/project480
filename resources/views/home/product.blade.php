@@ -9,7 +9,6 @@
       @foreach ($products as $product) 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="box">
-            <a href="">
               <div class="img-box">
                 <img src="products/{{$product->image}}">
               </div>
@@ -24,7 +23,10 @@
                   </span>
                 </h6>
               </div>
-            </a>
+
+              <div style="padding:15px;">
+                <a class="btn btn-light" href="{{url('product_details', $product->id)}}">Details</a>
+              </div>
           </div>
         </div>
       @endforeach
