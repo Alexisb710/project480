@@ -20,5 +20,9 @@
                 <li><a href="{{url('view_product')}}">View Product</a></li>
               </ul>
             </li>
+
+            <li>
+              <a href="{{ url('view_orders') }}"> <i class="fa fa-truck" aria-hidden="true"></i>Orders </a>
+            </li>
     </ul>
 </nav>

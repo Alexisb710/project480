@@ -18,7 +18,7 @@
         .table_design{
           text-align: center;
           margin: auto;
-          border: 2px solid yellowgreen;
+          border: 2px solid #73D3FF;
           margin-top: 15px;
           width: 600px;
         }
@@ -34,7 +34,7 @@
         td{
           color: white;
           padding:15px;
-          border:1px solid skyblue;
+          border:1px solid #73D3FF;
         }
     </style>
   </head>
