@@ -24,8 +24,11 @@
                 </h6>
               </div>
 
-              <div style="padding:15px;">
+              <div style="padding:15px; display:flex; justify-content:center; align-content:space-between; flex-direction:column; margin:5px;">
                 <a class="btn btn-light" href="{{url('product_details', $product->id)}}">Details</a>
+                <a style="margin-top: 5px;" class="btn btn-warning" href="{{url('add_cart', $product->id)}}">
+                  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
+                </a>
               </div>
           </div>
         </div>
