@@ -1,4 +1,27 @@
-<section class="contact_section ">
+<!DOCTYPE html>
+<html>
+
+<head>
+  @include('home.css')
+
+  <style type='text/css'>
+    .logout {
+      margin-left: 5px;
+      margin-right: 25px;
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- header section strats -->
+    @include('home.header')
+    <!-- end header section -->
+  </div>
+  <!-- end hero area -->
+
+  <section class="contact_section ">
     <div class="container px-0">
       <div class="heading_container ">
         <h2 class="">
@@ -41,3 +64,11 @@
   </section>
 
   <br><br><br>
+
+  
+  <!-- info section -->
+  @include('home.footer')
+
+</body>
+
+</html>

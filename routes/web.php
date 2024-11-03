@@ -63,6 +63,11 @@ Route::get('product_search', [AdminController::class, 'product_search'])
 
 Route::get('product_details/{id}', [HomeController::class, 'product_details']);
 
+Route::get('shop', [HomeController::class, 'shop']);
+Route::get('why_us', [HomeController::class, 'why_us']);
+Route::get('testimonial', [HomeController::class, 'testimonial']);
+Route::get('contact', [HomeController::class, 'contact']);
+
 Route::get('add_cart/{id}', [HomeController::class, 'add_cart'])
     ->middleware(['auth', 'verified']);
 
