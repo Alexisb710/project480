@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index() {
-        return view('admin.index');
+        $user_count = User::where('usertype', 'user')->get()->count();
+        $product_count = Product::all()->count();
+        $order_count = Order::all()->count();
+        $delivered_count = Order::where('status', 'Delivered')->get()->count();
+        return view('admin.index', compact('user_count', 'product_count', 'order_count', 'delivered_count'));
     }
 
     public function home(){
