@@ -39,7 +39,9 @@
       
     </div>
 
-    
+    <div class="div_design">
+      {{$products->onEachSide(1)->links()}}
+    </div>
     
   </div>
 </section>

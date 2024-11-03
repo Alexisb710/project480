@@ -20,7 +20,7 @@ class HomeController extends Controller
     }
 
     public function home(){
-        $products = Product::all();
+        $products = Product::paginate(8);
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
@@ -33,7 +33,7 @@ class HomeController extends Controller
     }
 
     public function login_home() {
-        $products = Product::all();
+        $products = Product::paginate(8);
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
@@ -133,7 +133,7 @@ class HomeController extends Controller
     }
 
     public function shop(){
-        $products = Product::all();
+        $products = Product::paginate(8);
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
