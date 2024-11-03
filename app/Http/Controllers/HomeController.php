@@ -107,8 +107,6 @@ class HomeController extends Controller
             $order->user_id = $user_id;
             $order->product_id = $carts->product_id;
             $order->save();
-
-            
         }
 
         $cart_remove = Cart::where('user_id', $user_id)->get();
@@ -121,5 +119,16 @@ class HomeController extends Controller
         toastr()->timeOut(5000)->closeButton()->success('Order has been placed!');
 
         return redirect()->back();
+    }
+
+    public function my_orders() {
+        
+        $user = Auth::user()->id;
+
+        $count = Cart::where('user_id', $user)->get()->count();
+
+        $order = Order::where('user_id', $user)->get();
+        
+        return view('home.orders', compact('count', 'order'));
     }
 }

@@ -10,6 +10,9 @@ Route::get('/', [HomeController::class, 'home']);
 Route::get('/dashboard', [HomeController::class, 'login_home'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/my_orders', [HomeController::class, 'my_orders'])
+    ->middleware(['auth', 'verified']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -80,3 +83,4 @@ Route::get('on_the_way/{id}', [AdminController::class, 'on_the_way'])
 
 Route::get('delivered/{id}', [AdminController::class, 'delivered'])
     ->middleware(['auth', 'admin']);
+

@@ -86,7 +86,8 @@
           <input type="text" name="phone" value="{{Auth::user()->phone}}">
         </div>
         <div class="div_gap">
-          <input class="btn btn-primary" type="submit" value="Place Order">
+          <input class="btn btn-primary" type="submit" value="Cash on Delivery">
+          <a class="btn btn-success" href="">Pay with Card</a>
         </div>
       </form>
 
