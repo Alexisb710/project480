@@ -99,8 +99,8 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function edit_product($id) {
-        $product = Product::find($id);
+    public function edit_product($slug) {
+        $product = Product::where('slug', $slug)->get()->first();
         $categories = Category::all();
         return view('admin.edit_product', compact('product', 'categories'));
     }
