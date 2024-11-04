@@ -40,6 +40,7 @@
     </div>
 
     <div class="div_design">
+      <br>
       {{$products->onEachSide(1)->links()}}
     </div>
     

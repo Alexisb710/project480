@@ -56,6 +56,17 @@
     .div_gap {
       padding: 20px;
     }
+
+    #navbarSupportedContent {
+      width: 100%;
+      background-color: #73d3ff;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
   </style>
 </head>
 
@@ -70,6 +81,7 @@
   <div class="div_design">
 
     <div class="order_design">
+      <h3>Billing Information</h3>
 
       <form action="{{ url('confirm_order') }}" method="post">
         @csrf

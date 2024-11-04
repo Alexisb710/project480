@@ -47,7 +47,7 @@
         <div class="statistic-block block">
           <div class="progress-details d-flex align-items-end justify-content-between">
             <div class="title">
-              <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>Orders Delivered</strong>
+              <div class="icon"><i class="fa fa-truck" aria-hidden="true"></i></div><strong>Orders Delivered</strong>
             </div>
             <div class="number dashtext-4">{{$delivered_count}}</div>
           </div>
