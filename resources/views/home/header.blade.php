@@ -1,17 +1,17 @@
 <header class="header_section">
     <nav class="navbar navbar-expand-lg custom_nav-container ">
-      <a class="navbar-brand" href="index.html">
+      {{-- <a class="navbar-brand" href="{{url('/')}}">
         <span>
           Adventures and Sportings
         </span>
-      </a>
+      </a> --}}
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class=""></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav  ">
-          <li class="nav-item active">
+        <ul class="navbar-nav">
+          <li class="nav-item">
             <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
@@ -56,14 +56,14 @@
             @else
               {{-- Authentication --}}
               {{-- Login --}}
-              <a href="{{route('login')}}">
+              <a href="{{route('login')}}" class="btn btn-primary" style="color: white;">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span>
                   Login
                 </span>
               </a>
               {{-- Register --}}
-              <a href="{{route('register')}}">
+              <a href="{{route('register')}}" class="btn btn-secondary" style="color: white;">
                 <i class="fa fa-vcard" aria-hidden="true"></i>
                 <span>
                   Register

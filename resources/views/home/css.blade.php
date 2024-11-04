@@ -7,10 +7,10 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="images/hero2.png" type="image/x-icon">
 
 <title>
-  Giftos
+  Adventures and Sportings
 </title>
 
 <!-- slider stylesheet -->

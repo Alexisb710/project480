@@ -14,14 +14,14 @@
                     <p>
                       Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
                     </p>
-                    <a href="">
-                      Contact Us
+                    <a href="#shop">
+                      Start Shopping
                     </a>
                   </div>
                 </div>
                 <div class="col-md-5 ">
                   <div class="img-box">
-                    <img style="width:600px" src="images/image3.jpeg" alt="" />
+                    <img style="width:600px; border-radius: 50%;" src="images/hero2.png" />
                   </div>
                 </div>
               </div>

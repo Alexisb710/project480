@@ -10,6 +10,17 @@
       margin-right: 25px;
       color: black;
     }
+
+    #navbarSupportedContent {
+      width: 100%;
+      background-color: #73d3ff;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
   </style>
 </head>
 

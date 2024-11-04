@@ -5,6 +5,9 @@
   @include('home.css')
 
   <style type='text/css'>
+    html {
+      scroll-behavior: smooth;
+    }
     .logout {
       margin-left: 5px;
       margin-right: 25px;
@@ -30,7 +33,7 @@
   @include('home.product')
 
   <!-- end shop section -->
-  
+
   <!-- info section -->
   @include('home.footer')
 
