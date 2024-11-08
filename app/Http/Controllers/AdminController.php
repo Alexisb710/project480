@@ -157,4 +157,9 @@ class AdminController extends Controller
 
         return redirect('/view_orders');
     }
+
+    public function view_users() {
+
+        return view('admin.view_users');
+    }
 }

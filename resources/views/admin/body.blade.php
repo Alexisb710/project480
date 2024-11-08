@@ -1,4 +1,4 @@
-  <h2 class="h5 no-margin-bottom">Dashboard</h2>
+  <h1 class="h5 no-margin-bottom" style="color: white;">Dashboard</h1>
 </div>
 </div>
 <section class="no-padding-top no-padding-bottom">
@@ -8,7 +8,7 @@
         <div class="statistic-block block">
           <div class="progress-details d-flex align-items-end justify-content-between">
             <div class="title">
-              <div class="icon"><i class="icon-user-1"></i></div><strong>Total Clients</strong>
+              <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{{url('view_users')}}">Total Users</a></strong>
             </div>
             <div class="number dashtext-1">{{$user_count}}</div>
           </div>

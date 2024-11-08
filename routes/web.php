@@ -89,3 +89,6 @@ Route::get('on_the_way/{id}', [AdminController::class, 'on_the_way'])
 Route::get('delivered/{id}', [AdminController::class, 'delivered'])
     ->middleware(['auth', 'admin']);
 
+Route::get('view_users', [AdminController::class, 'view_users'])
+    ->middleware(['auth', 'admin']);
+

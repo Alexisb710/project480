@@ -24,5 +24,8 @@
             <li>
               <a href="{{ url('view_orders') }}"> <i class="fa fa-truck" aria-hidden="true"></i>Orders </a>
             </li>
+            <li>
+              <a href="{{ url('view_users') }}"> <i class="fa fa-user-o" aria-hidden="true"></i>Users </a>
+            </li>
     </ul>
 </nav>
