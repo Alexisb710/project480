@@ -48,6 +48,11 @@
       border-radius: 15px;
       margin-top: 15px;
     }
+
+    h1 {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
   </style>
 </head>
 
@@ -56,6 +61,8 @@
     <!-- header section strats -->
     @include('home.header')
     <!-- end header section -->
+
+    <h1>My Orders</h1>
 
     <div class="div_center">
         <table>
@@ -71,7 +78,7 @@
                 <td>{{$order->order_number}}</td>
                 <td>{{$order->created_at}}</td>
                 <td>{{$order->status}}</td>
-                <td>${{ number_format($order->total_price, 2) }}</td> <!-- Display total price -->
+                <td style="color: green;">$ {{ number_format($order->total_price, 2) }}</td> <!-- Display total price -->
                 <td>
                   <a class="btn btn-danger" href="{{url('order_details', $order->id)}}">View</a>
                 </td>

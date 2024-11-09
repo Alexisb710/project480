@@ -185,7 +185,6 @@ class HomeController extends Controller
         $order->user_id = $user->id;
         $order->order_number = 'ORDER_' . strtoupper(uniqid());
         $order->total_price = $totalPrice; // Set the calculated total price
-        dd($order);
         $order->save();
     
         // Create an OrderItem record for each cart item

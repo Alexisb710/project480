@@ -54,9 +54,15 @@
       margin-bottom: 70px;
       padding: 18px;
     }
-    h1 {
+    h1, h3 {
       margin-top: 20px;
       margin-left: 20px;
+    }
+    .title_design {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 1000px;
     }
   </style>
 </head>
@@ -67,6 +73,12 @@
     @include('home.header')
     <!-- end header section -->
     <h1>Order Details for {{$order->order_number}}</h1>
+    <div class="title_design">
+      <h3>Order Status: {{$order->status}}</h3>
+      <a href="{{url('my_orders')}}">
+        <i class="fa fa-angle-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
   </div>
   <!-- end hero area -->
 
@@ -74,6 +86,7 @@
   <div class="div_center">
       <table>
           <tr>
+            <th>Product Image</th>
             <th>Product Title</th>
             <th>Quantity</th>
             <th>Item Price</th>
@@ -84,13 +97,16 @@
           ?>
           @foreach ($orderItems as $orderItem)
           <tr>
+              <td>
+                <img src="/products/{{$orderItem->product->image}}" width="120">
+              </td>
               <td>{{$orderItem->product->title}}</td>
               <td>{{$orderItem->quantity}}</td>
-              <td>{{$orderItem->price}}</td>
+              <td style="color: green;">$ {{$orderItem->price}}</td>
           </tr>
 
           <?php
-            $value += $orderItem->quantity + $orderItem->price;
+            $value += $orderItem->quantity * $orderItem->price;
           ?>
           @endforeach
       </table>
