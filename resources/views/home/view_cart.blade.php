@@ -86,20 +86,20 @@
       <form action="{{ url('confirm_order') }}" method="post">
         @csrf
         <div class="div_gap">
-          <label for="name">Receiver Name</label>
+          <label for="name">Name</label>
           <input type="text" name="name" value="{{Auth::user()->name}}">
         </div>
         <div class="div_gap">
-          <label for="address">Receiver Address</label>
+          <label for="address">Address</label>
           <textarea name="address">{{Auth::user()->address}}</textarea>
         </div>
         <div class="div_gap">
-          <label for="phone">Receiver Phone</label>
+          <label for="phone">Phone</label>
           <input type="text" name="phone" value="{{Auth::user()->phone}}">
         </div>
         <div class="div_gap">
           <input class="btn btn-primary" type="submit" value="Cash on Delivery">
-          <a class="btn btn-success" href="">Pay with Card</a>
+          <a class="btn btn-success" href="#">Pay with Card</a>
         </div>
       </form>
 
