@@ -48,6 +48,12 @@
       border-radius: 15px;
       margin-top: 15px;
     }
+
+    .order_value{
+      text-align: center;
+      margin-bottom: 70px;
+      padding: 18px;
+    }
   </style>
 </head>
 
@@ -57,26 +63,7 @@
     @include('home.header')
     <!-- end header section -->
 
-    <div class="div_center">
-        <table>
-            <tr>
-                <th>Order Number</th>
-                <th>Date Ordered</th>
-                <th>Delivery Status</th>
-                <th>View Order</th>
-            </tr>
-            @foreach ($order as $order)
-            <tr>
-                <td>{{$order->order_number}}</td>
-                <td>{{$order->created_at}}</td>
-                <td>{{$order->status}}</td>
-                <td>
-                  <a class="btn btn-danger" href="{{url('order_details', $order->id)}}">View</a>
-                </td>
-            </tr>
-            @endforeach
-        </table>
-    </div>
+    
 
   </div>
   <!-- end hero area -->

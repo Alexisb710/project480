@@ -63,6 +63,8 @@ Route::get('product_search', [AdminController::class, 'product_search'])
 
 Route::get('product_details/{id}', [HomeController::class, 'product_details']);
 
+Route::get('order_details/{id}', [HomeController::class, 'order_details']);
+
 Route::get('shop', [HomeController::class, 'shop']);
 Route::get('why_us', [HomeController::class, 'why_us']);
 Route::get('testimonial', [HomeController::class, 'testimonial']);
