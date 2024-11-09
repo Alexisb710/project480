@@ -21,7 +21,7 @@ class AdminController extends Controller
         $category->category_name = $request->category;
         $category->save();
 
-        toastr()->timeOut(5000)->closeButton()->success('Category Added Successfully!');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Category Added Successfully!');
 
         return redirect()->back();
     }
@@ -37,7 +37,7 @@ class AdminController extends Controller
         $data->category_name = $request->category;
         $data->save();
 
-        toastr()->timeOut(5000)->closeButton()->success('Category Updated Successfully!');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Category Updated Successfully!');
 
 
         return redirect('/view_category');
@@ -47,7 +47,7 @@ class AdminController extends Controller
         $data = Category::find($id);
         $data->delete();
 
-        toastr()->timeOut(5000)->closeButton()->success('Category Deleted Successfully');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Category Deleted Successfully');
 
         return redirect()->back();
     }
@@ -75,7 +75,7 @@ class AdminController extends Controller
         }
         $product->save();
 
-        toastr()->timeOut(5000)->closeButton()->success('Product Added Successfully');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Product Added Successfully');
 
         return redirect()->back();
     }
@@ -95,7 +95,7 @@ class AdminController extends Controller
 
         $product->delete();
 
-        toastr()->timeOut(5000)->closeButton()->success('Product Deleted Successfully');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Product Deleted Successfully');
 
         return redirect()->back();
     }
@@ -124,7 +124,7 @@ class AdminController extends Controller
         }
         $product->save();
 
-        toastr()->timeOut(5000)->closeButton()->success('Product Updated Successfully');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Product Updated Successfully');
 
         return redirect('/view_product');
     }
@@ -169,7 +169,7 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        toastr()->timeOut(5000)->closeButton()->success('User Deleted Successfully');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('User Deleted Successfully');
 
         return redirect()->back();
     }
