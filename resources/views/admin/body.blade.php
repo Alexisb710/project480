@@ -1,4 +1,10 @@
-  <h1 class="h5 no-margin-bottom" style="color: white;">Dashboard</h1>
+<style>
+  a:visited {
+    color: #8a8d93;
+  }
+</style>
+
+<h1 class="h5 no-margin-bottom" style="color: white;">Dashboard</h1>
 </div>
 </div>
 <section class="no-padding-top no-padding-bottom">
@@ -13,7 +19,7 @@
             <div class="number dashtext-1">{{$user_count}}</div>
           </div>
           <div class="progress progress-template">
-            <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+            <div role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
           </div>
         </div>
       </div>
@@ -21,12 +27,12 @@
         <div class="statistic-block block">
           <div class="progress-details d-flex align-items-end justify-content-between">
             <div class="title">
-              <div class="icon"><i class="icon-contract"></i></div><strong>Total Products</strong>
+              <div class="icon"><i class="icon-contract"></i></div><strong><a href="{{url('view_product')}}">Total Products</a></strong>
             </div>
             <div class="number dashtext-2">{{$product_count}}</div>
           </div>
           <div class="progress progress-template">
-            <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
+            <div role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
           </div>
         </div>
       </div>
@@ -34,12 +40,12 @@
         <div class="statistic-block block">
           <div class="progress-details d-flex align-items-end justify-content-between">
             <div class="title">
-              <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>Total Orders</strong>
+              <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong><a href="{{url('view_orders')}}">Total Orders</a></strong>
             </div>
             <div class="number dashtext-3">{{$order_count}}</div>
           </div>
           <div class="progress progress-template">
-            <div role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
+            <div role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
           </div>
         </div>
       </div>
@@ -52,7 +58,7 @@
             <div class="number dashtext-4">{{$delivered_count}}</div>
           </div>
           <div class="progress progress-template">
-            <div role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+            <div role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
           </div>
         </div>
       </div>
