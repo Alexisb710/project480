@@ -101,7 +101,7 @@ class HomeController extends Controller
             $data->save();
         }
     
-        toastr()->timeOut(5000)->closeButton()->success('Product Added to Cart');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Product Added to Cart');
     
         return redirect()->back();
     }
@@ -200,7 +200,7 @@ class HomeController extends Controller
         // Clear the cart
         Cart::where('user_id', $user->id)->delete();
     
-        toastr()->timeOut(5000)->closeButton()->success('Order has been placed!');
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Order has been placed!');
         return redirect()->back();
     }
     

@@ -113,7 +113,7 @@
   </div>
 
     <div class="order_value">
-      <h3>Order Total: {{$value}}</h3>
+      <h3>Order Total: {{ number_format($value, 2) }}</h3>
     </div>
 
    

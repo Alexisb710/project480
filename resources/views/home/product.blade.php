@@ -40,9 +40,6 @@
         </div>
       @endforeach
       
-      
-      
-      
     </div>
 
     <div class="div_design">

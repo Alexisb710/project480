@@ -142,7 +142,7 @@
   </div>
 
   <div class="cart_value">
-    <h3>Cart Total: {{$value}}</h3>
+    <h3>Cart Total: {{ number_format($value, 2) }}</h3>
   </div>
 
 

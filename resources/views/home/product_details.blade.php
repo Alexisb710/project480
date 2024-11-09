@@ -46,7 +46,7 @@
       <div class="container">
         <div class="heading_container heading_center">
           <h2>
-            Latest Products
+            {{$product->title}}
           </h2>
         </div>
         <div class="row">
@@ -70,10 +70,16 @@
                   <div class="detail-box">
                     <p>{{$product->description}}</p>
                   </div>
+
                   <div class="detail-box">
-                    <a style="margin-top: 5px;" class="btn btn-warning" href="{{url('add_cart', $product->id)}}">
-                      <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
-                    </a>
+                    <form action="{{ url('add_cart', $product->id) }}" method="POST" style="margin-top: 5px;">
+                        @csrf
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" value="1" min="1" style="width: 60px; margin-right: 5px;">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
+                        </button>
+                    </form>
                   </div>
 
               </div>
