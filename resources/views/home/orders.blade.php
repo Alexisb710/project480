@@ -63,13 +63,15 @@
                 <th>Order Number</th>
                 <th>Date Ordered</th>
                 <th>Delivery Status</th>
+                <th>Order Total</th>
                 <th>View Order</th>
             </tr>
-            @foreach ($order as $order)
+            @foreach ($orders as $order)
             <tr>
                 <td>{{$order->order_number}}</td>
                 <td>{{$order->created_at}}</td>
                 <td>{{$order->status}}</td>
+                <td>${{ number_format($order->total_price, 2) }}</td> <!-- Display total price -->
                 <td>
                   <a class="btn btn-danger" href="{{url('order_details', $order->id)}}">View</a>
                 </td>

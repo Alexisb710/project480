@@ -54,6 +54,10 @@
       margin-bottom: 70px;
       padding: 18px;
     }
+    h1 {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
   </style>
 </head>
 
@@ -62,12 +66,39 @@
     <!-- header section strats -->
     @include('home.header')
     <!-- end header section -->
-
-    
-
+    <h1>Order Details for {{$order->order_number}}</h1>
   </div>
   <!-- end hero area -->
 
+  
+  <div class="div_center">
+      <table>
+          <tr>
+            <th>Product Title</th>
+            <th>Quantity</th>
+            <th>Item Price</th>
+          </tr>
+
+          <?php
+              $value = 0;
+          ?>
+          @foreach ($orderItems as $orderItem)
+          <tr>
+              <td>{{$orderItem->product->title}}</td>
+              <td>{{$orderItem->quantity}}</td>
+              <td>{{$orderItem->price}}</td>
+          </tr>
+
+          <?php
+            $value += $orderItem->quantity + $orderItem->price;
+          ?>
+          @endforeach
+      </table>
+  </div>
+
+    <div class="order_value">
+      <h3>Order Total: {{$value}}</h3>
+    </div>
 
    
 

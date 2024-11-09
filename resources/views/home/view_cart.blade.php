@@ -109,6 +109,7 @@
       <tr>
         <th>Image</th>
         <th>Product Title</th>
+        <th>Quantity</th>
         <th>Price</th>
         <th>Action</th>
       </tr>
@@ -123,6 +124,7 @@
             <img src="/products/{{$cart->product->image}}" width="150">
           </td>
           <td>{{$cart->product->title}}</td>
+          <td>{{$cart->quantity}}</td>
           <td style="color: green">${{$cart->product->price}}</td>
           <td>
             <a class="btn btn-danger" href="{{url('delete_cart_item', $cart->id)}}">
@@ -133,7 +135,7 @@
 
 
       <?php
-        $value = $value + $cart->product->price;
+        $value += $cart->quantity * $cart->product->price;
       ?>
       @endforeach
     </table>

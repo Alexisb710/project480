@@ -70,7 +70,7 @@ Route::get('why_us', [HomeController::class, 'why_us']);
 Route::get('testimonial', [HomeController::class, 'testimonial']);
 Route::get('contact', [HomeController::class, 'contact']);
 
-Route::get('add_cart/{id}', [HomeController::class, 'add_cart'])
+Route::post('add_cart/{id}', [HomeController::class, 'add_cart'])
     ->middleware(['auth', 'verified']);
 
 Route::get('view_cart', [HomeController::class, 'view_cart'])
