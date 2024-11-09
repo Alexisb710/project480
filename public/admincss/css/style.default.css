@@ -26,6 +26,10 @@ a {
     display: inline-block;
 }
 
+a:visited {
+    color: #8a8d93;
+}
+
 .dashtext-1 {
     color: #864dd9 !important;
 }
