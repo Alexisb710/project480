@@ -63,7 +63,7 @@ Route::get('product_search', [AdminController::class, 'product_search'])
 
 Route::get('product_details/{id}', [HomeController::class, 'product_details']);
 
-Route::get('order_details/{id}', [HomeController::class, 'order_details']);
+Route::get('user_order_details/{id}', [HomeController::class, 'user_order_details']);
 
 Route::get('shop', [HomeController::class, 'shop']);
 Route::get('why_us', [HomeController::class, 'why_us']);
@@ -83,6 +83,9 @@ Route::post('confirm_order', [HomeController::class, 'confirm_order'])
     ->middleware(['auth', 'verified']);
 
 Route::get('view_orders', [AdminController::class, 'view_orders'])
+    ->middleware(['auth', 'admin']);
+
+Route::get('order_details/{id}', [AdminController::class, 'order_details'])
     ->middleware(['auth', 'admin']);
 
 Route::get('on_the_way/{id}', [AdminController::class, 'on_the_way'])

@@ -58,7 +58,7 @@
       margin-top: 20px;
       margin-left: 20px;
     }
-    .title_design {
+    .nav_back {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -73,9 +73,9 @@
     @include('home.header')
     <!-- end header section -->
     <h1>Order Details for {{$order->order_number}}</h1>
-    <div class="title_design">
+    <div class="nav_back">
       <h3>Order Status: {{$order->status}}</h3>
-      <a href="{{url('my_orders')}}">
+      <a href="{{url('my_orders')}}" class="btn btn-primary">
         <i class="fa fa-angle-left" aria-hidden="true"></i> Back
       </a>
     </div>

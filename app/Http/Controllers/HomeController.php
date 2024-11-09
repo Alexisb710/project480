@@ -219,7 +219,7 @@ class HomeController extends Controller
         $orders = Order::where('user_id', $user)
                         ->with('items')
                         ->orderBy('created_at', 'desc')
-                        ->get();
+                        ->paginate(8);
         
         // Calculate the total price for each order
         foreach ($orders as $order) {
@@ -231,7 +231,7 @@ class HomeController extends Controller
         return view('home.orders', compact('count', 'orders'));
     }
 
-    public function order_details($id) {
+    public function user_order_details($id) {
         // Retrieve the order and all associated items
         $order = Order::with('items')->findOrFail($id); // Ensure the 'items' relationship is set up in Order model
         $orderItems = $order->items;
@@ -246,7 +246,7 @@ class HomeController extends Controller
             $count = 0;
         }
 
-        return view('home.order_details', compact('count', 'order','orderItems'));
+        return view('home.user_order_details', compact('count', 'order','orderItems'));
     }
 
     public function shop(){

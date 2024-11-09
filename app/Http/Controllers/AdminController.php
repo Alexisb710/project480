@@ -140,8 +140,15 @@ class AdminController extends Controller
     }
 
     public function view_orders(){
-        $data = Order::all();
-        return view('admin.orders', compact('data'));
+        $orders = Order::with('user')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(8); // Load user details for each order
+        return view('admin.orders', compact('orders'));
+    }
+
+    public function order_details($id){
+        $order = Order::with('items.product')->findOrFail($id); // Load items and associated products for the order
+        return view('admin.order_details', compact('order'));
     }
 
     public function on_the_way($id) {

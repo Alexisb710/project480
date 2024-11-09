@@ -76,11 +76,11 @@
             @foreach ($orders as $order)
             <tr>
                 <td>{{$order->order_number}}</td>
-                <td>{{$order->created_at}}</td>
+                <td>{{$order->created_at->format('F j, Y')}}</td>
                 <td>{{$order->status}}</td>
                 <td style="color: green;">$ {{ number_format($order->total_price, 2) }}</td> <!-- Display total price -->
                 <td>
-                  <a class="btn btn-danger" href="{{url('order_details', $order->id)}}">View</a>
+                  <a class="btn btn-danger" href="{{url('user_order_details', $order->id)}}">View</a>
                 </td>
             </tr>
             @endforeach
