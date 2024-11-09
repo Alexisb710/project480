@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
@@ -159,7 +160,35 @@ class AdminController extends Controller
     }
 
     public function view_users() {
+        $users = User::where('usertype', 'user')
+                    ->paginate(5);
+        return view('admin.view_users', compact('users'));
+    }
 
-        return view('admin.view_users');
+    public function delete_user($id) {
+        $user = User::find($id);
+        $user->delete();
+
+        toastr()->timeOut(5000)->closeButton()->success('User Deleted Successfully');
+
+        return redirect()->back();
+    }
+
+    public function user_search(Request $request) {
+        $search = $request->search;
+        // Handle all user searches including an empty search
+        if ($search === 'admin') {
+            // Handle 'admin' search
+            $users = User::where('usertype', 'user')->paginate(5);
+        } elseif ($search) {
+            $users = User::where('name', 'LIKE', '%' . $search . '%')
+                         ->orWhere('email', 'LIKE', '%' . $search . '%')
+                         ->where('usertype', 'user')
+                         ->paginate(5);
+        }  else {
+            $users = User::where('usertype', 'user')->paginate(5);
+        }
+
+        return view('admin.view_users', compact('users'));
     }
 }

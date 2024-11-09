@@ -1996,7 +1996,7 @@ input.input-material ~ label.is-invalid ~ label {
 }
 
 a:visited {
-    color: #8a8d93;
+    color: default;
 }
 
 /*

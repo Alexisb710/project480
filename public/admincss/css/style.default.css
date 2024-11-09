@@ -27,7 +27,7 @@ a {
 }
 
 a:visited {
-    color: #8a8d93;
+    color: default;
 }
 
 .dashtext-1 {

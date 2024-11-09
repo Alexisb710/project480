@@ -92,3 +92,8 @@ Route::get('delivered/{id}', [AdminController::class, 'delivered'])
 Route::get('view_users', [AdminController::class, 'view_users'])
     ->middleware(['auth', 'admin']);
 
+Route::get('delete_user/{id}', [AdminController::class, 'delete_user'])
+    ->middleware(['auth', 'admin']);
+
+Route::get('user_search', [AdminController::class, 'user_search'])
+    ->middleware(['auth', 'admin']);

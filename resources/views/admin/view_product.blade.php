@@ -24,6 +24,7 @@
         font-weight: bold;
         padding: 15px;
         border: 1px solid lightcyan;
+        text-align: center;
       }
 
       td {
@@ -34,7 +35,7 @@
 
       input[type='search'] {
         width: 500px;
-        height: 60px;
+        height: 50px;
         margin-left: 50px;
       }
     </style>
