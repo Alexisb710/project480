@@ -1,3 +1,12 @@
+<style>
+  .filters {
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+    margin-bottom: 20px;
+  }
+</style>
+
 <section class="shop_section layout_padding" id="shop">
   <div class="container">
     <div class="heading_container heading_center">
@@ -5,6 +14,41 @@
         Latest Products
       </h2>
     </div>
+
+    <div class="filters">
+      <!-- Search -->
+      <form action="{{url('user_product_search')}}" method="get">
+        @csrf
+        <input type="search" name="search">
+        <input type="submit" class="btn btn-secondary" value="Search">
+        <a href="{{url('shop')}}" class="btn btn-secondary">Reset</a>
+      </form>
+
+      <!-- Category -->
+      <div class="input_design">
+        <label for="category">Category:</label>
+        <select name="category">
+          <option>Select Option</option>
+          @foreach ($categories as $category)
+              <option value="{{$category->category_name}}">{{$category->category_name}}</option>
+          @endforeach
+        </select>
+      </div>
+  
+      <!-- Sort By -->
+      <div class="input_design">
+        <label for="category">Sort By:</label>
+        <select name="category">
+          <option>Select Option</option>
+          <option>Price Low to High</option>
+          <option>Price High to Low</option>
+          <option>List A to Z</option>
+          <option>List Z to A</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products -->
     <div class="row">
       @foreach ($products as $product) 
         <div class="col-sm-6 col-md-4 col-lg-3">

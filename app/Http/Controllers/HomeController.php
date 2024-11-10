@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class HomeController extends Controller
 
     public function home(){
         $products = Product::paginate(8);
+        $categories = Category::all();
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
@@ -32,11 +34,12 @@ class HomeController extends Controller
             $count = 0;
         }
         
-        return view('home.index', compact('products', 'count'));
+        return view('home.index', compact('products', 'count', 'categories'));
     }
 
     public function login_home() {
         $products = Product::paginate(8);
+        $categories = Category::all();
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
@@ -45,7 +48,7 @@ class HomeController extends Controller
         } else {
             $count = 0;
         }
-        return view('home.index', compact('products', 'count'));
+        return view('home.index', compact('products', 'count', 'categories'));
     }
 
     public function product_details($id) {
@@ -154,12 +157,6 @@ class HomeController extends Controller
         toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Order has been placed!');
         return redirect()->back();
     }
-    
-
-    /////////
-    /////////
-    /////////
-    /////////
 
     public function my_orders() {
         
@@ -202,6 +199,7 @@ class HomeController extends Controller
 
     public function shop(){
         $products = Product::paginate(8);
+        $categories = Category::all();
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
@@ -211,7 +209,7 @@ class HomeController extends Controller
             $count = 0;
         }
         
-        return view('home.shop', compact('products', 'count'));
+        return view('home.shop', compact('products', 'count', 'categories'));
     }
     public function why_us(){
         if (Auth::id()) {
@@ -248,5 +246,23 @@ class HomeController extends Controller
         }
         
         return view('home.contact', compact('count'));
+    }
+
+    public function user_product_search(Request $request) {
+        $search = $request->search;
+        $categories = Category::all();
+        if (Auth::id()) {
+            $user = Auth::user();
+            $user_id = $user->id;
+            // Calculate total quantity
+            $count = Cart::where('user_id', $user_id)->sum('quantity');
+        } else {
+            $count = 0;
+        }
+        $products = Product::where('title', 'LIKE', '%'.$search.'%')
+                            ->orWhere('category', 'LIKE', '%'.$search.'%')
+                            ->orWhere('price', 'LIKE', '%'.$search.'%')
+                            ->paginate(8);
+        return view('home.shop', compact('products', 'categories', 'count'));
     }
 }

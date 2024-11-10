@@ -13,6 +13,11 @@ Route::get('/dashboard', [HomeController::class, 'login_home'])
 Route::get('/my_orders', [HomeController::class, 'my_orders'])
     ->middleware(['auth', 'verified']);
 
+Route::get('user_product_search', [HomeController::class, 'user_product_search']);
+
+// Route::get('user_product_search', [HomeController::class, 'user_product_search'])
+//     ->middleware(['auth', 'verified']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
