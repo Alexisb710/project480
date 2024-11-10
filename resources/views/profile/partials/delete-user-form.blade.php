@@ -9,47 +9,62 @@
         </p>
     </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    <form id="delete-account-form" method="post" action="{{ route('profile.destroy') }}" class="p-6">
+        @csrf
+        @method('delete')
 
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
-            @csrf
-            @method('delete')
-
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
-
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-            </p>
-
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
-
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
-            </div>
-
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
-
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
-            </div>
-        </form>
-    </x-modal>
+        <!-- Delete Account Button -->
+        <button type="button" class="btn btn-danger" onclick="confirmAccountDeletion(event)">
+            {{ __('Delete Account') }}
+        </button>
+    </form>
 </section>
+
+<!-- SweetAlert2 Library from CDNJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    function confirmAccountDeletion(event) {
+        event.preventDefault();
+
+        swal({
+            title: "Are you sure?",
+            text: "Once your account is deleted, all of your data will be permanently lost.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                // Show additional prompt to enter password
+                swal({
+                    text: "Please enter your password to confirm deletion:",
+                    content: {
+                        element: "input",
+                        attributes: {
+                            placeholder: "Password",
+                            type: "password",
+                        },
+                    },
+                    button: {
+                        text: "Confirm Delete",
+                        closeModal: false,
+                    },
+                }).then((password) => {
+                    if (password) {
+                        // Add the password field to the form and submit it
+                        const form = document.getElementById('delete-account-form');
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'password';
+                        input.value = password;
+                        form.appendChild(input);
+
+                        form.submit();
+                    } else {
+                        swal("Deletion cancelled", "You must enter your password to delete the account", "info");
+                    }
+                });
+            }
+        });
+    }
+</script>

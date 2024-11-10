@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Cart;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -16,8 +17,17 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        if (Auth::id()) {
+            $user = Auth::user();
+            $user_id = $user->id;
+            // Calculate total quantity
+            $count = Cart::where('user_id', $user_id)->sum('quantity');
+        } else {
+            $count = 0;
+        }
         return view('profile.edit', [
             'user' => $request->user(),
+            'count' => $count
         ]);
     }
 
@@ -33,6 +43,8 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+
+        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Profile Updated Successfully');
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
