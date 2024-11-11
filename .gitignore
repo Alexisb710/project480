@@ -22,3 +22,4 @@ yarn-error.log
 /.zed
 public/admincss/img/avatar-*.jpg
 public/admincss/img/map-marker-*.png
+/bootstrap/cache
