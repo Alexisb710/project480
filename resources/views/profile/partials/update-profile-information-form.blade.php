@@ -59,6 +59,7 @@
         <div>
             <x-input-label for="phone" :value="__('Phone')" />
             <x-text-input id="phone" name="phone" type="text" class="mt-1 block input-long" :value="old('phone', $user->phone)" required autocomplete="phone" />
+            <label for="phone">Format: (XXX)XXX-XXXX</label>
             <x-input-error class="mt-2" :messages="$errors->get('phone')" />
         </div>
 

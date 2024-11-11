@@ -120,6 +120,18 @@ class HomeController extends Controller
     }
 
     public function confirm_order(Request $request) {
+        // Validation
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:500',
+            'phone' => 'required|string|regex:/^\(\d{3}\)\d{3}-\d{4}$/'
+        ], [
+            'name.required' => 'Name is required.',
+            'address.required' => 'Address is required.',
+            'phone.required' => 'Phone number is required.',
+            'phone.regex' => 'Phone number format must be (XXX)XXX-XXXX.'
+        ]);
+
         $name = $request->name;
         $address = $request->address;
         $phone = $request->phone;

@@ -83,6 +83,16 @@
     <div class="order_design">
       <h3>Billing Information</h3>
 
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+
       <form action="{{ url('confirm_order') }}" method="post">
         @csrf
         <div class="div_gap">
