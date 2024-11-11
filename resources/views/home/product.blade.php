@@ -2,9 +2,56 @@
   .filters {
     display: flex;
     gap: 10px;
-    justify-content: end;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
+    position: relative;
   }
+
+  #filter-toggle {
+    cursor: pointer;
+    border: 1px solid gray;
+  }
+
+  .dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; /* Position below the Filter button */
+    right: 0;
+    background-color: #f8f9fa; /* Background color for dropdown */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 200px; /* Optional: set a minimum width */
+  }
+
+  .dropdown-menu .filter-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .input_design {
+      display: flex;
+      align-items: center;
+      gap: 5px; /* Space between label and select */
+  }
+
+  input[type='search'] {
+    width: 350px;
+    border: 1px solid gray;
+    height: 38px;
+    border-radius: 10px;
+    text-indent: 15px;
+  }
+
+  select {
+    height: 35px;
+  }
+  
 </style>
 
 <section class="shop_section layout_padding" id="shop">
@@ -14,38 +61,53 @@
         Latest Products
       </h2>
     </div>
-
+    
     <div class="filters">
-      <!-- Search -->
+      <!-- Search Form -->
       <form action="{{url('user_product_search')}}" method="get">
         @csrf
-        <input type="search" name="search">
+        <input type="search" name="search" placeholder="What can we help you find today?">
         <input type="submit" class="btn btn-secondary" value="Search">
-        <a href="{{url('shop')}}" class="btn btn-secondary">Reset</a>
+        <a href="{{url('shop')}}" class="btn btn-primary">Reset</a>
       </form>
 
-      <!-- Category -->
-      <div class="input_design">
-        <label for="category">Category:</label>
-        <select name="category">
-          <option>Select Option</option>
-          @foreach ($categories as $category)
-              <option value="{{$category->category_name}}">{{$category->category_name}}</option>
-          @endforeach
-        </select>
+      <!-- Filter Toggle Button -->
+      <button class="btn btn-light" id="filter-toggle">
+        <i class="fa fa-caret-down" aria-hidden="true"></i> Filter
+      </button>
+
+      <!-- Filter Dropdown Menu (Initially Hidden) -->
+      <div class="dropdown-menu" id="filter-dropdown">
+        <form action="{{ url('filter_products') }}" method="get" class="filter-form">
+          @csrf
+          <!-- Category -->
+          <div class="input_design">
+            <label for="category">Category:</label>
+            <select name="category">
+              <option value="">Select Option</option>
+              @foreach ($categories as $category)
+                <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <!-- Sort By -->
+          <div class="input_design">
+            <label for="sort_by">Sort By:</label>
+            <select name="sort_by">
+              <option value="">Select Option</option>
+              <option value="price_asc">Price Low to High</option>
+              <option value="price_desc">Price High to Low</option>
+              <option value="title_asc">List A to Z</option>
+              <option value="title_desc">List Z to A</option>
+            </select>
+          </div>
+
+          <!-- Apply Filter Button -->
+          <input type="submit" class="btn btn-secondary" value="Apply Filter">
+        </form>
       </div>
-  
-      <!-- Sort By -->
-      <div class="input_design">
-        <label for="category">Sort By:</label>
-        <select name="category">
-          <option>Select Option</option>
-          <option>Price Low to High</option>
-          <option>Price High to Low</option>
-          <option>List A to Z</option>
-          <option>List Z to A</option>
-        </select>
-      </div>
+
     </div>
 
     <!-- Products -->
@@ -93,3 +155,20 @@
     
   </div>
 </section>
+
+<script>
+  document.getElementById('filter-toggle').addEventListener('click', function(event) {
+      event.preventDefault();
+      const filterDropdown = document.getElementById('filter-dropdown');
+      filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Close dropdown if user clicks outside
+  document.addEventListener('click', function(event) {
+      const filterDropdown = document.getElementById('filter-dropdown');
+      const filterToggle = document.getElementById('filter-toggle');
+      if (!filterDropdown.contains(event.target) && event.target !== filterToggle) {
+          filterDropdown.style.display = 'none';
+      }
+  });
+</script>

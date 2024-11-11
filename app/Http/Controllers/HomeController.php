@@ -265,4 +265,50 @@ class HomeController extends Controller
                             ->paginate(8);
         return view('home.shop', compact('products', 'categories', 'count'));
     }
+    
+    public function filter_products(Request $request)
+    {
+        // Start building the query
+        $query = Product::query();
+
+        // Apply category filter if provided
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Apply sorting if selected
+        if ($request->filled('sort_by')) {
+            switch ($request->sort_by) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'title_asc':
+                    $query->orderBy('title', 'asc');
+                    break;
+                case 'title_desc':
+                    $query->orderBy('title', 'desc');
+                    break;
+            }
+        }
+
+        // Get the filtered products with pagination
+        $products = $query->paginate(8);
+
+        // Get categories for the filter dropdown
+        $categories = Category::all();
+
+        // Get the cart item count for authenticated users
+        $count = 0;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $count = Cart::where('user_id', $user->id)->count();
+        }
+
+        // Pass products, categories, and count to the view
+        return view('home.shop', compact('products', 'categories', 'count'));
+    }
+
 }
