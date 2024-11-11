@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid d-flex align-items-center justify-content-between">
         <div class="navbar-header">
-            <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+            <!-- Navbar Header--><a href="{{url('admin/dashboard')}}" class="navbar-brand">
             <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Admin</strong><strong>Dashboard</strong></div>
             <div class="brand-text brand-sm"><strong class="text-primary">A</strong><strong>D</strong></div></a>
             <!-- Sidebar Toggle Btn-->
