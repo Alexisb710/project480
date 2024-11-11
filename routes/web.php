@@ -14,6 +14,7 @@ Route::get('/my_orders', [HomeController::class, 'my_orders'])
     ->middleware(['auth', 'verified']);
 
 Route::get('user_product_search', [HomeController::class, 'user_product_search']);
+
 Route::get('filter_products', [HomeController::class, 'filter_products']);
 
 // Route::get('user_product_search', [HomeController::class, 'user_product_search'])
