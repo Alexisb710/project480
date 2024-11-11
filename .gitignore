@@ -20,5 +20,5 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
-public/adminness/img/avatar-*.jpg
-public/adminness/img/map-marker-*.png
+public/admincss/img/avatar-*.jpg
+public/admincss/img/map-marker-*.png
