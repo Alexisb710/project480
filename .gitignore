@@ -23,3 +23,4 @@ yarn-error.log
 public/admincss/img/avatar-*.jpg
 public/admincss/img/map-marker-*.png
 /bootstrap/cache
+.DS_Store.DS_Store
