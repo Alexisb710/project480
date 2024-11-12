@@ -17,11 +17,29 @@ use Session;
 class PaymentController extends Controller
 {
     public function stripe($value) {
+        $user = Auth::user();
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        // Check if the cart is empty or value is 0
+        if ($cartItems->isEmpty() || $value == 0) {
+            return redirect()->back()->withErrors(['error' => 'Your cart is empty. Please add items to your cart before proceeding to payment.']);
+        }
+        
         return view('home.stripe', compact('value'));
     }
 
     public function stripePost(Request $request, $value) {
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $name = Auth::user()->name;
+        $address = Auth::user()->address;
+        $phone = Auth::user()->phone;
+        $user = Auth::user();
+        $cartItems = Cart::where('user_id', $user->id)->with('product')->get(); // Load product relationship
+        // Check if the cart is empty or value is 0
+        if ($cartItems->isEmpty() || $value == 0) {
+            return redirect()->back()->withErrors(['error' => 'Your cart is empty. Please add items to your cart before placing an order.']);
+        }
 
         Stripe\Charge::create ([
                 "amount" => $value * 100,
@@ -30,12 +48,6 @@ class PaymentController extends Controller
                 "description" => "Test payment complete." 
         ]);
 
-        $name = Auth::user()->name;
-        $address = Auth::user()->address;
-        $phone = Auth::user()->phone;
-        $user = Auth::user();
-        $cartItems = Cart::where('user_id', $user->id)->with('product')->get(); // Load product relationship
-        
         // Calculate the total price
         $totalPrice = $cartItems->sum(function ($cartItem) {
             return $cartItem->quantity * $cartItem->product->price; // Access price from the product relationship

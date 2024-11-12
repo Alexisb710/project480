@@ -5,6 +5,10 @@
   @include('home.css')
 
   <style type='text/css'>
+    html {
+      scroll-behavior: smooth;
+    }
+
     .logout {
       margin-left: 5px;
       margin-right: 25px;
@@ -51,7 +55,7 @@
 
     .order_value{
       text-align: center;
-      margin-bottom: 70px;
+      margin-bottom: 20px;
       padding: 18px;
     }
     h1, h3 {
@@ -63,6 +67,12 @@
       justify-content: space-between;
       align-items: center;
       width: 1000px;
+    }
+
+    .top-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
@@ -112,11 +122,13 @@
       </table>
   </div>
 
-    <div class="order_value">
-      <h3>Order Total: {{ number_format($value, 2) }}</h3>
-    </div>
+  <div class="order_value">
+    <h3>Order Total: {{ number_format($value, 2) }}</h3>
+  </div>
 
-   
+  <div class="top-btn">
+    <a href="#top" display="block">Back to top</a>
+  </div>
 
   <!-- info section -->
   @include('home.footer')

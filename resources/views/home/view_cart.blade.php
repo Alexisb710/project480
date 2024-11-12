@@ -5,6 +5,9 @@
   @include('home.css')
 
   <style type='text/css'>
+    html {
+      scroll-behavior: smooth;
+    }
     .logout {
       margin-left: 5px;
       margin-right: 25px;
@@ -74,11 +77,17 @@
       text-align: center;
       margin-bottom: 20px;
     }
+
+    .top-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 
 <body>
-  <div class="hero_area">
+  <div class="hero_area" id="top">
     <!-- header section strats -->
     @include('home.header')
     <!-- end header section -->
@@ -126,20 +135,20 @@
   <div class="cart_value">
     <h3>Cart Total: {{ number_format($value, 2) }}</h3>
   </div>
-  
+
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 
   <h3>Billing/Shipping Information</h3><br>
-  <div class="order_design">
 
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        <ul>
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
+  <div class="order_design">
 
     <form action="{{ url('confirm_order') }}" method="post">
       @csrf
@@ -161,6 +170,10 @@
       </div>
     </form>
 
+  </div>
+
+  <div class="top-btn">
+    <a href="#top">Back to top</a>
   </div>
 
   <!-- info section -->
