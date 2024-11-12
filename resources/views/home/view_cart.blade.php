@@ -39,13 +39,16 @@
 
     .cart_value {
       text-align: center;
-      margin-bottom: 70px;
+      margin-bottom: 40px;
       padding: 18px;
     }
 
     .order_design {
       padding-right: 100px;
-      margin-top: -50px;
+      margin-top: -20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     label {
@@ -67,6 +70,10 @@
       border-radius: 15px;
       margin-top: 15px;
     }
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 
@@ -79,41 +86,6 @@
   </div>
   <!-- end hero area -->
   <div class="div_design">
-
-    <div class="order_design">
-      <h3>Billing Information</h3>
-
-      @if ($errors->any())
-        <div class="alert alert-danger">
-          <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-      @endif
-
-      <form action="{{ url('confirm_order') }}" method="post">
-        @csrf
-        <div class="div_gap">
-          <label for="name">Name</label>
-          <input type="text" name="name" value="{{Auth::user()->name}}">
-        </div>
-        <div class="div_gap">
-          <label for="address">Address</label>
-          <textarea name="address">{{Auth::user()->address}}</textarea>
-        </div>
-        <div class="div_gap">
-          <label for="phone">Phone</label>
-          <input type="text" name="phone" value="{{Auth::user()->phone}}">
-        </div>
-        <div class="div_gap">
-          <input class="btn btn-primary" type="submit" value="Cash on Delivery">
-          <a class="btn btn-success" href="#">Pay with Card</a>
-        </div>
-      </form>
-
-    </div>
 
     <table>
       <tr>
@@ -154,7 +126,42 @@
   <div class="cart_value">
     <h3>Cart Total: {{ number_format($value, 2) }}</h3>
   </div>
+  
 
+  <h3>Billing/Shipping Information</h3><br>
+  <div class="order_design">
+
+    @if ($errors->any())
+      <div class="alert alert-danger">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
+    <form action="{{ url('confirm_order') }}" method="post">
+      @csrf
+      <div class="div_gap">
+        <label for="name">Name</label>
+        <input type="text" name="name" value="{{Auth::user()->name}}">
+      </div>
+      <div class="div_gap">
+        <label for="address">Address</label>
+        <textarea name="address">{{Auth::user()->address}}</textarea>
+      </div>
+      <div class="div_gap">
+        <label for="phone">Phone</label>
+        <input type="text" name="phone" value="{{Auth::user()->phone}}">
+      </div>
+      <div class="div_gap">
+        <input class="btn btn-primary" type="submit" value="Cash on Delivery">
+        <a class="btn btn-success" href="{{url('stripe', $value)}}">Pay with Card</a>
+      </div>
+    </form>
+
+  </div>
 
   <!-- info section -->
   @include('home.footer')

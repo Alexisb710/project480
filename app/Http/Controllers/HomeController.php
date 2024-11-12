@@ -321,6 +321,6 @@ class HomeController extends Controller
 
         // Pass products, categories, and count to the view
         return view('home.shop', compact('products', 'categories', 'count'));
-    }
+    }    
 
 }

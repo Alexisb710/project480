@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'home']);
@@ -109,3 +110,9 @@ Route::get('delete_user/{id}', [AdminController::class, 'delete_user'])
 
 Route::get('user_search', [AdminController::class, 'user_search'])
     ->middleware(['auth', 'admin']);
+
+
+Route::controller(PaymentController::class)->group(function(){
+    Route::get('stripe/{value}', 'stripe');
+    Route::post('stripe/{value}', 'stripePost')->name('stripe.post');
+});
