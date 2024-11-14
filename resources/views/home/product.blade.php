@@ -56,6 +56,13 @@
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
   }
+
+  .div_design{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
 </style>
 
 <section class="shop_section layout_padding" id="shop">

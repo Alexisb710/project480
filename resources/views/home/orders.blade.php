@@ -53,6 +53,12 @@
       margin-top: 20px;
       margin-left: 20px;
     }
+
+    .div_design{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -85,7 +91,11 @@
             </tr>
             @endforeach
         </table>
-    </div>
+      </div>
+      <div class="div_design">
+        <br>
+        {{$orders->onEachSide(1)->links()}}
+      </div>
 
   </div>
   <!-- end hero area -->

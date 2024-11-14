@@ -34,6 +34,13 @@
           align-items: center;
           margin-top: 60px;
       }
+
+      .div_design{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+      }
     </style>
   </head>
   <body>
