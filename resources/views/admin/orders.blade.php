@@ -88,6 +88,11 @@
               </table>
             </div>
 
+            <div class="div_design">
+              <br>
+              {{$orders->onEachSide(1)->links()}}
+            </div>
+
           </div>
       </div>
     </div>
