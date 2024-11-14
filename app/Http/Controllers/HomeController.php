@@ -318,10 +318,13 @@ class HomeController extends Controller
         $categories = Category::all();
 
         // Get the cart item count for authenticated users
-        $count = 0;
-        if (Auth::check()) {
+        if (Auth::id()) {
             $user = Auth::user();
-            $count = Cart::where('user_id', $user->id)->count();
+            $user_id = $user->id;
+            // Calculate total quantity
+            $count = Cart::where('user_id', $user_id)->sum('quantity');
+        } else {
+            $count = 0;
         }
 
         // Pass products, categories, and count to the view
