@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Profile Updated Successfully');
+        toastr()->timeOut(5000)->closeButton()->success('Profile Updated Successfully');
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
