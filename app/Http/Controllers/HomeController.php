@@ -312,7 +312,7 @@ class HomeController extends Controller
         }
 
         // Get the filtered products with pagination
-        $products = $query->paginate(8);
+        $products = $query->paginate(8)->withQueryString();
 
         // Get categories for the filter dropdown
         $categories = Category::all();
