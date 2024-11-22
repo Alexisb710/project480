@@ -80,8 +80,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url('testimonial')}}">
-            Testimonial
+          <a class="nav-link" href="{{url('testimonials')}}">
+            Testimonials
           </a>
         </li>
         <li class="nav-item">

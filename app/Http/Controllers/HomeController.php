@@ -240,7 +240,7 @@ class HomeController extends Controller
         
         return view('home.why_us', compact('count'));
     }
-    public function testimonial(){
+    public function testimonials(){
         if (Auth::id()) {
             $user = Auth::user();
             $user_id = $user->id;
@@ -250,7 +250,7 @@ class HomeController extends Controller
             $count = 0;
         }
         
-        return view('home.testimonial', compact('count'));
+        return view('home.testimonials', compact('count'));
     }
     public function contact(){
         if (Auth::id()) {

@@ -78,7 +78,7 @@ Route::get('user_order_details/{id}', [HomeController::class, 'user_order_detail
 
 Route::get('shop', [HomeController::class, 'shop']);
 Route::get('why_us', [HomeController::class, 'why_us']);
-Route::get('testimonial', [HomeController::class, 'testimonial']);
+Route::get('testimonials', [HomeController::class, 'testimonials']);
 Route::get('contact', [HomeController::class, 'contact']);
 
 Route::post('add_cart/{id}', [HomeController::class, 'add_cart'])

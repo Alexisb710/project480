@@ -38,7 +38,7 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          Testimonial
+          Testimonials
         </h2>
       </div>
     </div>
@@ -50,16 +50,16 @@
               <div class="client_info">
                 <div class="client_name">
                   <h5>
-                    Morijorch
+                    Marcus Lee
                   </h5>
                   <h6>
-                    Default model text
+                    Fitness Enthusiast
                   </h6>
                 </div>
                 <i class="fa fa-quote-left" aria-hidden="true"></i>
               </div>
               <p>
-                editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
+                Adventures and Sportings made my fitness journey so much easier! Their curated recommendations helped me find exactly what I needed, and the delivery was super fast. Highly recommend to anyone serious about fitness or sports!
               </p>
             </div>
           </div>
@@ -68,16 +68,16 @@
               <div class="client_info">
                 <div class="client_name">
                   <h5>
-                    Rochak
+                    Priya Mehta
                   </h5>
                   <h6>
-                    Default model text
+                    Runner and Hiker
                   </h6>
                 </div>
                 <i class="fa fa-quote-left" aria-hidden="true"></i>
               </div>
               <p>
-                Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+                I love how user-friendly the website is! I found everything I needed for my hiking trip in one place. The quality of the products is outstanding, and the free shipping was a great bonus!
               </p>
             </div>
           </div>
@@ -89,13 +89,13 @@
                     Brad Johns
                   </h5>
                   <h6>
-                    Default model text
+                    Boxer and Powerlifter
                   </h6>
                 </div>
                 <i class="fa fa-quote-left" aria-hidden="true"></i>
               </div>
               <p>
-                Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy, editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Variouseditors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various
+                The team at Adventures and Sportings really cares about their customers. They helped me find the perfect gloves and weights for my training. I’ve never felt more confident about my gear!
               </p>
             </div>
           </div>
