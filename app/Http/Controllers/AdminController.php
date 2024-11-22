@@ -134,7 +134,7 @@ class AdminController extends Controller
         $products = Product::where('title', 'LIKE', '%'.$search.'%')
                             ->orWhere('category', 'LIKE', '%'.$search.'%')
                             ->orWhere('price', 'LIKE', '%'.$search.'%')
-                            ->paginate(3);
+                            ->paginate(5);
 
         return view('admin.view_product', compact('products'));
     }
