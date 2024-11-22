@@ -109,16 +109,16 @@
         $value = 0;
       ?>
 
-      @foreach ($cart as $cart)
+      @foreach ($cart as $cartItem)
         <tr>
           <td>
-            <img src="/products/{{$cart->product->image}}" width="150">
+            <img src="/products/{{$cartItem->product->image}}" width="150">
           </td>
-          <td>{{$cart->product->title}}</td>
-          <td>{{$cart->quantity}}</td>
-          <td style="color: green">${{$cart->product->price}}</td>
+          <td>{{$cartItem->product->title}}</td>
+          <td>{{$cartItem->quantity}}</td>
+          <td style="color: green">${{$cartItem->product->price}}</td>
           <td>
-            <a class="btn btn-danger" href="{{url('delete_cart_item', $cart->id)}}">
+            <a class="btn btn-danger" href="{{url('delete_cart_item', $cartItem->id)}}">
               <i class="fa fa-minus-square" aria-hidden="true"></i> Remove</a>
           </td>
 
@@ -126,15 +126,23 @@
 
 
       <?php
-        $value += $cart->quantity * $cart->product->price;
+        $value += $cartItem->quantity * $cartItem->product->price;
       ?>
       @endforeach
     </table>
   </div>
 
+  {{--  --}}
+  <div id="cart-count-container">
+    <h3>Total Items: <span id="cart-count">{{ $count }}</span></h3>
+  </div>
+  {{--  --}}
+
   <div class="cart_value">
     <h3>Cart Total: {{ number_format($value, 2) }}</h3>
   </div>
+
+  
 
   @if ($errors->any())
     <div class="alert alert-danger">
