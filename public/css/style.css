@@ -16,6 +16,11 @@ body {
     padding-bottom: 45px;
 }
 
+.layout_padding3 {
+    padding-top: 90px;
+    padding-bottom: 5px;
+}
+
 .layout_padding2-top {
     padding-top: 45px;
 }
@@ -515,6 +520,24 @@ a:focus {
 }
 
 .why_section .box .img-box svg {
+    width: 55px;
+    height: auto;
+    fill: #320b57;
+}
+
+.about_section .box {
+    text-align: center;
+    margin-top: 15px;
+    background-color: #f9f8f7;
+    padding: 25px;
+    border-radius: 5px;
+}
+
+.about_section .box .img-box {
+    margin-bottom: 15px;
+}
+
+.about_section .box .img-box svg {
     width: 55px;
     height: auto;
     fill: #320b57;

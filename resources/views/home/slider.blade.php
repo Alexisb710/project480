@@ -12,7 +12,7 @@
                       Sportings
                     </h1>
                     <p>
-                      Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
+                      Welcome to your ultimate destination for premium sports and fitness gear and accessories. Whether you're a seasoned athlete or just starting your wellness journey, we've got everything you need to fuel your passion. Let's make your sports and fitness goals a reality — start shopping today! 
                     </p>
                     <a href="#shop">
                       Start Shopping

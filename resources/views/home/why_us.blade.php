@@ -34,7 +34,7 @@
 
   <!-- why section -->
 
-  <section class="why_section layout_padding">
+  <section class="why_section layout_padding3">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
@@ -136,7 +136,7 @@
                 Fast Delivery
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Get your gear when you need it! <br>We ensure speedy delivery to keep your fitness journey on track without delays.
               </p>
             </div>
           </div>
@@ -251,7 +251,7 @@
                 Free Shiping
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Enjoy free shipping on all orders over $50! <br>Shop more and save more as you gear up for greatness.
               </p>
             </div>
           </div>
@@ -272,7 +272,7 @@
                 Best Quality
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Discover products that meet the highest standards of durability and performance, built for enthusiasts like you.
               </p>
             </div>
           </div>
@@ -284,6 +284,20 @@
   <!-- end why section -->
   
   <!-- info section -->
+  <section class="about_section layout_padding3">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>About Us</h2>
+      </div>
+      <div class="about_info box">
+        <p>
+          At Adventures and Sportings, we are dedicated to fueling your passion for sports and fitness. Our mission is to be your trusted source for high-quality gear and accessories, catering to athletes and enthusiasts of all levels. Whether you're training for your next competition, exploring a new sport, or building a healthier lifestyle, we offer a diverse range of products designed to meet your unique needs. We understand how important the right equipment is, and we're committed to helping you achieve your best, with products you can trust and a shopping experience you'll love. Let us help you make every adventure unforgettable!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer section -->
   @include('home.footer')
 
 </body>
