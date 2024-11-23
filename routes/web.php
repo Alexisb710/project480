@@ -114,10 +114,11 @@ Route::get('delete_user/{id}', [AdminController::class, 'delete_user'])
 Route::get('user_search', [AdminController::class, 'user_search'])
     ->middleware(['auth', 'admin']);
 
-Route::post('update_cart_ajax/{id}', [HomeController::class, 'update_cart_ajax'])
-    ->middleware(['auth', 'verified']);
-
+    
 Route::controller(PaymentController::class)->group(function(){
     Route::get('stripe/{value}', 'stripe');
     Route::post('stripe/{value}', 'stripePost')->name('stripe.post');
 });
+
+Route::post('update_cart_ajax/{id}', [HomeController::class, 'update_cart_ajax'])
+    ->middleware(['auth', 'verified']);
