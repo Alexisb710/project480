@@ -114,10 +114,33 @@ class HomeController extends Controller
 
     public function delete_cart_item($id) {
         $item = Cart::find($id);
-        $item->delete();
     
-        return redirect()->back();
-    }
+        if ($item) {
+            $item->delete();
+    
+            // Recalculate the cart total and count
+            $user = Auth::user();
+            $cartTotal = Cart::where('user_id', $user->id)
+                             ->get()
+                             ->sum(function ($item) {
+                                 return $item->quantity * $item->product->price;
+                             });
+    
+            $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Item has been removed from the shopping cart.',
+                'cart_total' => $cartTotal,
+                'cart_count' => $cartCount,
+            ]);
+        }
+    
+        return response()->json([
+            'success' => false,
+            'message' => 'Item not found.',
+        ], 404);
+    }    
 
     public function confirm_order(Request $request) {
         // Validation

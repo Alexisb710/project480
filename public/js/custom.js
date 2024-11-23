@@ -83,3 +83,42 @@ function updateCartItem(cartId, quantity) {
             alert("An error occurred. Please try again.");
         });
 }
+
+function removeCartItem(cartId) {
+    const csrfToken = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+
+    fetch(`/delete_cart_item/${cartId}`, {
+        method: "DELETE", // Use DELETE HTTP method
+        headers: {
+            "X-CSRF-TOKEN": csrfToken, // Add CSRF token
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                // Remove the item row from the table
+                const row = document.querySelector(`#cart-item-${cartId}`);
+                if (row) row.remove();
+
+                // Update cart total and count dynamically
+                document.getElementById("cart-total").innerText =
+                    data.cart_total.toFixed(2);
+                document.getElementById("cart-count").innerText =
+                    data.cart_count;
+
+                // Update the header cart count dynamically
+                updateCartHeaderCount(data.cart_count);
+
+                // Show toastr notification
+                toastr.success(data.message);
+            } else {
+                toastr.error(data.message || "Failed to remove the item.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error removing cart item:", error);
+            toastr.error("An error occurred. Please try again.");
+        });
+}

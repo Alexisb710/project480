@@ -128,8 +128,9 @@
           </td>
           <td style="color: green">${{$cartItem->product->price}}</td>
           <td>
-            <a class="btn btn-danger" href="{{url('delete_cart_item', $cartItem->id)}}">
-              <i class="fa fa-minus-square" aria-hidden="true"></i> Remove</a>
+            <button class="btn btn-danger" onclick="removeCartItem({{ $cartItem->id }})">
+              <i class="fa fa-minus-square" aria-hidden="true"></i> Remove
+            </button>
           </td>
 
         </tr>
