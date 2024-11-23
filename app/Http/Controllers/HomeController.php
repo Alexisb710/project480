@@ -115,7 +115,7 @@ class HomeController extends Controller
     public function delete_cart_item($id) {
         $item = Cart::find($id);
         $item->delete();
-
+    
         return redirect()->back();
     }
 
@@ -330,5 +330,46 @@ class HomeController extends Controller
         // Pass products, categories, and count to the view
         return view('home.shop', compact('products', 'categories', 'count'));
     }    
+
+    public function update_cart_ajax(Request $request, $id) {
+        $user = Auth::user();
+        $quantity = max($request->input('quantity', 0), 0); // Ensure quantity is at least 0
+    
+        // Find the cart item
+        $cartItem = Cart::where('user_id', $user->id)
+                        ->where('id', $id)
+                        ->first();
+    
+        if ($cartItem) {
+            if ($quantity == 0) {
+                // Remove the item from the cart if quantity is 0
+                $cartItem->delete();
+            } else {
+                // Update the quantity of the item
+                $cartItem->quantity = $quantity;
+                $cartItem->save();
+            }
+    
+            // Recalculate cart total and count
+            $cartTotal = Cart::where('user_id', $user->id)
+                             ->get()
+                             ->sum(function ($item) {
+                                 return $item->quantity * $item->product->price;
+                             });
+    
+            $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+    
+            return response()->json([
+                'success' => true,
+                'cart_total' => $cartTotal,
+                'cart_count' => $cartCount, // Include updated count in response
+            ]);
+        }
+    
+        return response()->json([
+            'success' => false,
+            'message' => 'Cart item not found.',
+        ], 404);
+    }
 
 }

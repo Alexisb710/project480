@@ -94,7 +94,7 @@
                 <a href="{{ url('my_orders') }}">My Orders</a>
                 <a href="{{ url('view_cart') }}" style="position: relative; display: inline-block;">
                     <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
-                    <div style="color: white; background-color: #F96900; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; width: 20px; height: 20px; position: absolute; top: -10px; right: -16px;">
+                    <div id="header-cart-count" style="color: white; background-color: #F96900; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; width: 20px; height: 20px; position: absolute; top: -10px; right: -16px;">
                         {{ $count }}
                     </div>
                 </a>

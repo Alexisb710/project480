@@ -84,6 +84,8 @@
       align-items: center;
     }
   </style>
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -110,12 +112,20 @@
       ?>
 
       @foreach ($cart as $cartItem)
-        <tr>
+        <tr id="cart-item-{{ $cartItem->id }}">
           <td>
             <img src="/products/{{$cartItem->product->image}}" width="150">
           </td>
           <td>{{$cartItem->product->title}}</td>
-          <td>{{$cartItem->quantity}}</td>
+          {{-- <td>{{$cartItem->quantity}}</td> --}}
+          <td>
+            <input type="number" 
+                   name="quantity" 
+                   value="{{ $cartItem->quantity }}" 
+                   min="0" 
+                   style="width: 60px;" 
+                   onchange="updateCartItem({{ $cartItem->id }}, this.value)">
+          </td>
           <td style="color: green">${{$cartItem->product->price}}</td>
           <td>
             <a class="btn btn-danger" href="{{url('delete_cart_item', $cartItem->id)}}">
@@ -139,7 +149,7 @@
   {{--  --}}
 
   <div class="cart_value">
-    <h3>Cart Total: {{ number_format($value, 2) }}</h3>
+    <h3>Cart Total: $<span id="cart-total">{{ number_format($value, 2) }}</span></h3>
   </div>
 
   
