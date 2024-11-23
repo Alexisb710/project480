@@ -37,11 +37,21 @@ function updateCartHeaderCount(newCount) {
     }
 }
 
+// Format number with commas
+function formatNumberWithCommas(number) {
+    return number.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+}
+
 // Update cart item quantity dynamically
 function updateCartItem(cartId, quantity) {
     // Ensure the quantity is at least 0
-    if (quantity < 0) {
-        alert("Quantity must be at least 0.");
+    if (quantity < 1) {
+        alert(
+            "Quantity must be at least 1. If you wish to remove the item, click the 'Remove' button."
+        );
         return;
     }
 
@@ -61,18 +71,41 @@ function updateCartItem(cartId, quantity) {
         .then((data) => {
             if (data.success) {
                 // Update cart total and count dynamically
-                document.getElementById("cart-total").innerText =
-                    data.cart_total.toFixed(2);
+                const cartTotalElement = document.getElementById("cart-total");
+                if (cartTotalElement) {
+                    cartTotalElement.innerText = formatNumberWithCommas(
+                        data.cart_total
+                    );
+                }
                 document.getElementById("cart-count").innerText =
                     data.cart_count;
 
                 // Update header count dynamically
                 updateCartHeaderCount(data.cart_count);
 
-                // Remove the item row if quantity is 0
-                if (quantity == 0) {
-                    const row = document.querySelector(`#cart-item-${cartId}`);
-                    if (row) row.remove();
+                // Update the Pay with Card link dynamically
+                const payWithCardLink =
+                    document.querySelector('a[href*="stripe"]');
+                if (payWithCardLink) {
+                    payWithCardLink.href = `/stripe/${data.cart_total.toFixed(
+                        2
+                    )}`;
+                }
+
+                // Update the Cash on Delivery form dynamically
+                const cashOnDeliveryInput = document.querySelector(
+                    'input[name="cart_total"]'
+                );
+                if (cashOnDeliveryInput) {
+                    cashOnDeliveryInput.value = data.cart_total.toFixed(2);
+                }
+
+                // Ensure the quantity is updated visually
+                const inputField = document.querySelector(
+                    `#cart-item-${cartId} input[name="quantity"]`
+                );
+                if (inputField) {
+                    inputField.value = quantity;
                 }
             } else {
                 alert(data.message || "Failed to update the cart.");
@@ -108,11 +141,15 @@ function removeCartItem(cartId) {
                 document.getElementById("cart-count").innerText =
                     data.cart_count;
 
+                // Show toastr notification
+                toastr.success(data.message, "Success", {
+                    timeOut: 5000,
+                    closeButton: true,
+                    positionClass: "toast-top-right",
+                });
+
                 // Update the header cart count dynamically
                 updateCartHeaderCount(data.cart_count);
-
-                // Show toastr notification
-                toastr.success(data.message);
             } else {
                 toastr.error(data.message || "Failed to remove the item.");
             }
@@ -120,5 +157,46 @@ function removeCartItem(cartId) {
         .catch((error) => {
             console.error("Error removing cart item:", error);
             toastr.error("An error occurred. Please try again.");
+        });
+}
+
+function addToCart(productId) {
+    const csrfToken = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+    const quantityInput = document.getElementById(`quantity-${productId}`);
+    const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
+
+    fetch(`/add_cart/${productId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken,
+        },
+        body: JSON.stringify({ quantity }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                // Update cart count dynamically
+                const cartCountBadge =
+                    document.getElementById("header-cart-count");
+                if (cartCountBadge) {
+                    cartCountBadge.textContent = data.cart_count;
+                }
+
+                // Show toastr notification
+                toastr.success("Product added to cart!", "Success", {
+                    timeOut: 5000,
+                    closeButton: true,
+                    positionClass: "toast-top-right",
+                });
+            } else {
+                toastr.error(data.message || "Failed to add product to cart.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error adding to cart:", error);
+            toastr.error("Please make sure you are registered or logged in.");
         });
 }

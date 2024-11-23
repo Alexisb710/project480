@@ -14,7 +14,7 @@
         h1 { color: white; }
   
         .table_design {
-          border: 2px solid yellowgreen;
+          border: 2px solid #73D3FF;
         }
   
         th {

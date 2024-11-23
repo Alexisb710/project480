@@ -89,9 +89,14 @@ class HomeController extends Controller
             $data->save();
         }
     
-        toastr()->timeOut(5000)->closeButton()->success('Product Added to Cart');
+        // Calculate the total cart count
+        $cartCount = Cart::where('user_id', $user_id)->sum('quantity');
     
-        return redirect()->back();
+        return response()->json([
+            'success' => true,
+            'message' => 'Product Added to Cart',
+            'cart_count' => $cartCount,
+        ]);
     }
 
     public function view_cart() {
@@ -116,6 +121,7 @@ class HomeController extends Controller
         $item = Cart::find($id);
     
         if ($item) {
+            $productName = $item->product->title;
             $item->delete();
     
             // Recalculate the cart total and count
@@ -130,7 +136,7 @@ class HomeController extends Controller
     
             return response()->json([
                 'success' => true,
-                'message' => 'Item has been removed from the shopping cart.',
+                'message' => "$productName was removed from shopping cart.",
                 'cart_total' => $cartTotal,
                 'cart_count' => $cartCount,
             ]);
@@ -356,7 +362,7 @@ class HomeController extends Controller
 
     public function update_cart_ajax(Request $request, $id) {
         $user = Auth::user();
-        $quantity = max($request->input('quantity', 0), 0); // Ensure quantity is at least 0
+        $quantity = max($request->input('quantity', 1), 1); // Ensure quantity is at least 1
     
         // Find the cart item
         $cartItem = Cart::where('user_id', $user->id)
@@ -364,15 +370,10 @@ class HomeController extends Controller
                         ->first();
     
         if ($cartItem) {
-            if ($quantity == 0) {
-                // Remove the item from the cart if quantity is 0
-                $cartItem->delete();
-            } else {
-                // Update the quantity of the item
-                $cartItem->quantity = $quantity;
-                $cartItem->save();
-            }
-    
+            // Update the quantity of the item
+            $cartItem->quantity = $quantity;
+            $cartItem->save();
+            
             // Recalculate cart total and count
             $cartTotal = Cart::where('user_id', $user->id)
                              ->get()

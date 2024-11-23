@@ -22,6 +22,10 @@
       padding: 15px;
     }
 
+    .detail-cart-box{
+      margin-left: 15px;
+    }
+
     #navbarSupportedContent {
       width: 100%;
       background-color: #73d3ff;
@@ -33,6 +37,7 @@
       margin-top: 15px;
     }
   </style>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -71,15 +76,19 @@
                     <p>{{$product->description}}</p>
                   </div>
 
-                  <div class="detail-box">
-                    <form action="{{ url('add_cart', $product->id) }}" method="POST" style="margin-top: 5px;">
-                        @csrf
-                        <label for="quantity">Quantity</label>
-                        <input type="number" name="quantity" value="1" min="1" style="width: 60px; margin-right: 5px;">
-                        <button type="submit" class="btn btn-warning">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
-                        </button>
-                    </form>
+                  <div class="detail-cart-box">
+                    <label for="quantity-{{ $product->id }}">Quantity</label>
+                    <input id="quantity-{{ $product->id }}" 
+                           type="number" 
+                           name="quantity" 
+                           value="1" 
+                           min="1" 
+                           style="width: 60px; margin-right: 5px;">
+                    <button type="button" 
+                            class="btn btn-warning" 
+                            onclick="addToCart({{ $product->id }})">
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
+                    </button>
                   </div>
 
               </div>

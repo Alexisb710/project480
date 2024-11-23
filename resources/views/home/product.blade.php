@@ -1,3 +1,6 @@
+<head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 <style>
   .filters {
     display: flex;
@@ -144,14 +147,21 @@
             <div style="padding:15px; display:flex; justify-content:center; align-content:space-between; flex-direction:column; margin:5px;">
               <a class="btn btn-light" href="{{ url('product_details', $product->id) }}">Details</a>
           
-              <form action="{{ url('add_cart', $product->id) }}" method="POST" style="margin-top: 5px;">
-                @csrf
-                <label for="quantity">Quantity</label>
-                <input type="number" name="quantity" value="1" min="1" style="width: 60px; margin-right: 5px;">
-                <button type="submit" class="btn btn-warning" style="width:100%;">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
+              <div style="margin-top: 5px;">
+                <label for="quantity-{{ $product->id }}">Quantity</label>
+                <input id="quantity-{{ $product->id }}" 
+                        type="number" 
+                        name="quantity" 
+                        value="1" 
+                        min="1" 
+                        style="width: 60px; margin-right: 5px;">
+                <button type="button" 
+                        class="btn btn-warning" 
+                        style="width:100%;"
+                        onclick="addToCart({{ $product->id }})">
+                  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
                 </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>

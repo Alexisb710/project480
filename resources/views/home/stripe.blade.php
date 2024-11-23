@@ -23,7 +23,7 @@
                 <div class="panel panel-default credit-card-box">
                     <div class="panel-heading display-table" >
                             <h3 class="panel-title" >Payment Details</h3>
-                            <h4>Order Total: ${{$value}}</h4>
+                            <h4>Order Total: $ {{ number_format($value, 2) }}</h4>
                     </div>
 
                     <div class="panel-body">

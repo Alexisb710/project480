@@ -83,6 +83,11 @@
       justify-content: center;
       align-items: center;
     }
+
+    .pay-btns {
+      display: inline-block;
+      margin-bottom: 15px;
+    }
   </style>
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -122,7 +127,7 @@
             <input type="number" 
                    name="quantity" 
                    value="{{ $cartItem->quantity }}" 
-                   min="0" 
+                   min="1" 
                    style="width: 60px;" 
                    onchange="updateCartItem({{ $cartItem->id }}, this.value)">
           </td>
@@ -183,9 +188,14 @@
         <label for="phone">Phone</label>
         <input type="text" name="phone" value="{{Auth::user()->phone}}">
       </div>
-      <div class="div_gap">
+      <!-- Cash on Delivery Button -->
+      <div class="div_gap pay-btns" style="margin-left:10px;">
+        <input type="hidden" name="cart_total" value="{{ $value }}" />
         <input class="btn btn-primary" type="submit" value="Cash on Delivery">
-        <a class="btn btn-success" href="{{url('stripe', $value)}}">Pay with Card</a>
+      </div>
+      <!-- Pay with Card Link -->
+      <div class="div_gap pay-btns">
+        <a class="btn btn-success" href="{{ url('stripe', $value) }}">Pay with Card</a>
       </div>
     </form>
 
