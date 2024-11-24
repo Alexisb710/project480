@@ -19,7 +19,7 @@
 <!-- bootstrap core css -->
 <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.css')}}" />
 
-<!-- Custom styles for this template -->
+<!-- Custom styles  -->
 <link href="{{asset('css/style.css')}}" rel="stylesheet" />
 <!-- responsive style -->
 <link href="{{asset('css/responsive.css')}}" rel="stylesheet" />

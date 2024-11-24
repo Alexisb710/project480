@@ -4,92 +4,8 @@
 <head>
   @include('home.css')
 
-  <style type='text/css'>
-    html {
-      scroll-behavior: smooth;
-    }
-    .logout {
-      margin-left: 5px;
-      margin-right: 25px;
-      color: black;
-    }
-
-    .div_design{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 60px;
-    }
-
-    table {
-      border: 2px solid #101010;
-      text-align: center;
-      width: 800px;
-    }
-
-    th {
-      border: 2px solid black;
-      text-align: center;
-      color: white;
-      font: 20px;
-      font-weight: bold;
-      background-color: black;
-    }
-
-    td {
-      border: 1px solid skyblue;
-    }
-
-    .cart_value {
-      text-align: center;
-      margin-bottom: 40px;
-      padding: 18px;
-    }
-
-    .order_design {
-      padding-right: 100px;
-      margin-top: -20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    label {
-      display: inline-block;
-      width: 150px;
-    }
-
-    .div_gap {
-      padding: 20px;
-    }
-
-    #navbarSupportedContent {
-      width: 100%;
-      background-color: #73d3ff;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-radius: 15px;
-      margin-top: 15px;
-    }
-    h3 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .top-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .pay-btns {
-      display: inline-block;
-      margin-bottom: 15px;
-    }
-  </style>
-
+  {{-- <link rel="stylesheet" href="{{ asset('css/view_cart.css') }}"> --}}
+  @vite('resources/css/view_cart.css')
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -170,36 +86,48 @@
     </div>
   @endif
 
-  <h3>Billing/Shipping Information</h3><br>
+  <h3 class="billing-title">Billing/Shipping Information</h3>
 
-  <div class="order_design">
-
+  <div class="order-card">
     <form action="{{ url('confirm_order') }}" method="post">
       @csrf
-      <div class="div_gap">
-        <label for="name">Name</label>
-        <input type="text" name="name" value="{{Auth::user()->name}}">
-      </div>
-      <div class="div_gap">
-        <label for="address">Address</label>
-        <textarea name="address">{{Auth::user()->address}}</textarea>
-      </div>
-      <div class="div_gap">
-        <label for="phone">Phone</label>
-        <input type="text" name="phone" value="{{Auth::user()->phone}}">
-      </div>
-      <!-- Cash on Delivery Button -->
-      <div class="div_gap pay-btns" style="margin-left:10px;">
+      <table class="billing-table">
+        <tr>
+          <td>
+            <label for="name">Name</label>
+          </td>
+          <td>
+            <input type="text" name="name" class="input-field" value="{{Auth::user()->name}}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="address">Address</label>
+          </td>
+          <td>
+            <textarea name="address" class="textarea-field">{{Auth::user()->address}}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="phone">Phone</label>
+          </td>
+          <td>
+            <input type="text" name="phone" class="input-field" value="{{Auth::user()->phone}}">
+          </td>
+        </tr>
+      </table>
+      <div class="button-container">
+        <!-- Cash on Delivery Button -->
         <input type="hidden" name="cart_total" value="{{ $value }}" />
-        <input class="btn btn-primary" type="submit" value="Cash on Delivery">
-      </div>
-      <!-- Pay with Card Link -->
-      <div class="div_gap pay-btns">
-        <a class="btn btn-success" href="{{ url('stripe', $value) }}">Pay with Card</a>
+        <input class="btn btn-primary custom-btn" type="submit" value="Cash on Delivery">
+
+        <!-- Pay with Card Link -->
+        <a class="btn btn-success custom-btn" href="{{ url('stripe', $value) }}">Pay with Card</a>
       </div>
     </form>
-
   </div>
+
 
   <div class="top-btn">
     <a href="#top">Back to top</a>
