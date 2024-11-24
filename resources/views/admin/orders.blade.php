@@ -70,7 +70,7 @@
                 @foreach ($orders as $order)
                   <tr>
                     <td>{{$order->order_number}}</td>
-                    <td>{{$order->created_at}}</td>
+                    <td>{{$order->created_at}} (UTC)</td>
                     <td>{{$order->name}}</td>
                     <td>$ {{$order->total_price}}</td>
                     <td>{{$order->payment_status}}</td>
