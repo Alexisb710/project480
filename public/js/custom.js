@@ -136,8 +136,30 @@ function removeCartItem(cartId) {
                 if (row) row.remove();
 
                 // Update cart total and count dynamically
-                document.getElementById("cart-total").innerText =
-                    data.cart_total.toFixed(2);
+                const cartTotalElement = document.getElementById("cart-total");
+                if (cartTotalElement) {
+                    cartTotalElement.innerText = formatNumberWithCommas(
+                        data.cart_total
+                    );
+                }
+
+                // Update the Cash on Delivery form dynamically
+                const cashOnDeliveryInput = document.querySelector(
+                    'input[name="cart_total"]'
+                );
+                if (cashOnDeliveryInput) {
+                    cashOnDeliveryInput.value = data.cart_total.toFixed(2);
+                }
+
+                // Update the Pay with Card link dynamically
+                const payWithCardLink =
+                    document.querySelector('a[href*="stripe"]');
+                if (payWithCardLink) {
+                    payWithCardLink.href = `/stripe/${data.cart_total.toFixed(
+                        2
+                    )}`;
+                }
+
                 document.getElementById("cart-count").innerText =
                     data.cart_count;
 
