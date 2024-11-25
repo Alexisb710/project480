@@ -72,6 +72,9 @@ Route::post('update_product/{id}', [AdminController::class, 'update_product'])
 Route::get('product_search', [AdminController::class, 'product_search'])
     ->middleware(['auth', 'admin']);
 
+Route::get('order_search', [AdminController::class, 'order_search'])
+    ->middleware(['auth', 'admin']);
+
 Route::get('product_details/{id}', [HomeController::class, 'product_details']);
 
 Route::get('user_order_details/{id}', [HomeController::class, 'user_order_details']);

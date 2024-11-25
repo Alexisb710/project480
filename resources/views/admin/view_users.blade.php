@@ -56,7 +56,7 @@
 
             <form action="{{url('user_search')}}" method="get">
               @csrf
-              <input type="search" name="search">
+              <input type="search" name="search" placeholder="Search by name or email">
               <input type="submit" class="btn btn-secondary" value="Search">
               <a href="{{url('view_users')}}" class="btn btn-secondary">Reset</a>
             </form>

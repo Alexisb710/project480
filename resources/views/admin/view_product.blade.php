@@ -55,7 +55,7 @@
 
             <form action="{{url('product_search')}}" method="get">
               @csrf
-              <input type="search" name="search">
+              <input type="search" name="search" placeholder="Search by title, category, or price">
               <input type="submit" class="btn btn-secondary" value="Search">
               <a href="{{url('view_product')}}" class="btn btn-secondary">Reset</a>
             </form>

@@ -41,6 +41,12 @@
         align-items: center;
         margin-top: 30px;
       }
+
+      input[type='search'] {
+          width: 500px;
+          height: 42px;
+          margin-left: 90px;
+        }
     </style>
   </head>
   <body>
@@ -55,6 +61,14 @@
         <div class="page-header">
           <div class="container-fluid">
             <h1>Orders</h1>
+
+            <form action="{{url('order_search')}}" method="get">
+              @csrf
+              <input type="search" name="search" placeholder="Search by order number, customer name, or order total">
+              <input type="submit" class="btn btn-secondary" value="Search">
+              <a href="{{url('view_orders')}}" class="btn btn-secondary">Reset</a>
+            </form>
+
             <div class="table_center">
               <table>
                 <tr>

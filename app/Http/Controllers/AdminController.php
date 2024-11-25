@@ -134,7 +134,8 @@ class AdminController extends Controller
         $products = Product::where('title', 'LIKE', '%'.$search.'%')
                             ->orWhere('category', 'LIKE', '%'.$search.'%')
                             ->orWhere('price', 'LIKE', '%'.$search.'%')
-                            ->paginate(5);
+                            ->paginate(5)
+                            ->withQueryString();
 
         return view('admin.view_product', compact('products'));
     }
@@ -143,6 +144,18 @@ class AdminController extends Controller
         $orders = Order::with('user')
                         ->orderBy('created_at', 'desc')
                         ->paginate(8); // Load user details for each order
+        return view('admin.orders', compact('orders'));
+    }
+
+    public function order_search(Request $request) {
+        $search = $request->search;
+        $orders = Order::where('name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('order_number', 'LIKE', '%'.$search.'%')
+                            ->orWhere('total_price', 'LIKE', '%'.$search.'%')
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(5)
+                            ->withQueryString();
+
         return view('admin.orders', compact('orders'));
     }
 
@@ -186,14 +199,15 @@ class AdminController extends Controller
         // Handle all user searches including an empty search
         if ($search === 'admin') {
             // Handle 'admin' search
-            $users = User::where('usertype', 'user')->paginate(5);
+            $users = User::where('usertype', 'user')->paginate(5)->withQueryString();
         } elseif ($search) {
             $users = User::where('name', 'LIKE', '%' . $search . '%')
                          ->orWhere('email', 'LIKE', '%' . $search . '%')
                          ->where('usertype', 'user')
-                         ->paginate(5);
+                         ->paginate(5)
+                         ->withQueryString();
         }  else {
-            $users = User::where('usertype', 'user')->paginate(5);
+            $users = User::where('usertype', 'user')->paginate(5)->withQueryString();
         }
 
         return view('admin.view_users', compact('users'));
