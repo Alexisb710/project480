@@ -1,72 +1,72 @@
 <head>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<style>
-  .filters {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    position: relative;
-  }
-
-  #filter-toggle {
-    cursor: pointer;
-    border: 1px solid gray;
-  }
-
-  .dropdown-menu {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 100%; /* Position below the Filter button */
-    right: 0;
-    background-color: #f8f9fa; /* Background color for dropdown */
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    min-width: 200px; /* Optional: set a minimum width */
-  }
-
-  .dropdown-menu .filter-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .input_design {
+  <style>
+    .filters {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+  
+    #filter-toggle {
+      cursor: pointer;
+      border: 1px solid gray;
+    }
+  
+    .dropdown-menu {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 100%; /* Position below the Filter button */
+      right: 0;
+      background-color: #f8f9fa; /* Background color for dropdown */
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      min-width: 200px; /* Optional: set a minimum width */
+    }
+  
+    .dropdown-menu .filter-form {
       display: flex;
       align-items: center;
-      gap: 5px; /* Space between label and select */
-  }
-
-  input[type='search'] {
-    width: 350px;
-    border: 1px solid gray;
-    height: 38px;
-    border-radius: 10px;
-    text-indent: 15px;
-  }
-
-  select {
-    height: 35px;
-  }
+      justify-content: center;
+      gap: 10px;
+    }
   
-  .box {
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-  }
-
-  .div_design{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-  }
-</style>
+    .input_design {
+        display: flex;
+        align-items: center;
+        gap: 5px; /* Space between label and select */
+    }
+  
+    input[type='search'] {
+      width: 350px;
+      border: 1px solid gray;
+      height: 38px;
+      border-radius: 10px;
+      text-indent: 15px;
+    }
+  
+    select {
+      height: 35px;
+    }
+    
+    .box {
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+  
+    .div_design{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
 
 <section class="shop_section layout_padding" id="shop">
   <div class="container">
