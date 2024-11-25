@@ -35,7 +35,8 @@
       @foreach ($cart as $cartItem)
         <tr id="cart-item-{{ $cartItem->id }}">
           <td>
-            <img src="/products/{{$cartItem->product->image}}" width="150">
+            <a class="btn btn-light" href="{{ url('product_details', $cartItem->product->id) }}">
+            <img src="/products/{{$cartItem->product->image}}" width="150"></a>
           </td>
           <td>{{$cartItem->product->title}}</td>
           {{-- <td>{{$cartItem->quantity}}</td> --}}
