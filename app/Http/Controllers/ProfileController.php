@@ -67,6 +67,8 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        toastr()->timeOut(5000)->closeButton()->success('Account Deleted Successfully.');
+
         return Redirect::to('/');
     }
 }
