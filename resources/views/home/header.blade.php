@@ -80,11 +80,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url('testimonials')}}">
-            Testimonials
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="{{url('contact')}}">Contact Us</a>
         </li>
       </ul>
