@@ -169,7 +169,7 @@ class HomeController extends Controller
         
         // Check if the cart is empty
         if ($cartItems->isEmpty()) {
-            return redirect()->back()->withErrors(['error' => 'Your cart is empty. Please add items to your cart before placing an order.']);
+            return redirect()->back()->withErrors(['error' => 'Your cart is empty. Please add items to your cart before trying to place an order.']);
         }
 
         // Calculate the total price
@@ -201,7 +201,7 @@ class HomeController extends Controller
         Cart::where('user_id', $user->id)->delete();
     
         toastr()->timeOut(5000)->closeButton()->success('Order has been placed!');
-        return redirect()->back();
+        return redirect('/dashboard');
     }
 
     public function my_orders() {

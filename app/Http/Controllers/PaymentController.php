@@ -22,7 +22,7 @@ class PaymentController extends Controller
 
         // Check if the cart is empty or value is 0
         if ($cartItems->isEmpty() || $value == 0) {
-            return redirect()->back()->withErrors(['error' => 'Your cart is empty. Please add items to your cart before proceeding to payment.']);
+            return redirect()->back()->withErrors(['error' => 'Your cart is empty. Please add items to your cart before trying to place an order.']);
         }
         
         return view('home.stripe', compact('value'));
@@ -79,6 +79,6 @@ class PaymentController extends Controller
     
         toastr()->timeOut(5000)->closeButton()->success('Order has been placed!');
         
-        return redirect('view_cart');
+        return redirect('/dashboard');
     }
 }
