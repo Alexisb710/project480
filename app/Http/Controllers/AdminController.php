@@ -181,6 +181,7 @@ class AdminController extends Controller
 
     public function view_users() {
         $users = User::where('usertype', 'user')
+                    ->orderBy('created_at', 'desc')
                     ->paginate(5);
         return view('admin.view_users', compact('users'));
     }
