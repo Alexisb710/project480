@@ -23,7 +23,7 @@ class HomeController extends Controller
     }
 
     public function home(){
-        $products = Product::paginate(8);
+        $products = Product::orderBy('created_at', 'desc')->paginate(8);
         $categories = Category::all();
         if (Auth::id()) {
             $user = Auth::user();
@@ -38,7 +38,7 @@ class HomeController extends Controller
     }
 
     public function login_home() {
-        $products = Product::paginate(8);
+        $products = Product::orderBy('created_at', 'desc')->paginate(8);
         $categories = Category::all();
         if (Auth::id()) {
             $user = Auth::user();
@@ -244,7 +244,7 @@ class HomeController extends Controller
     }
 
     public function shop(){
-        $products = Product::paginate(8);
+        $products = Product::orderBy('created_at', 'desc')->paginate(8);
         $categories = Category::all();
         if (Auth::id()) {
             $user = Auth::user();
