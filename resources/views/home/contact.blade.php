@@ -26,6 +26,11 @@
       border-radius: 15px;
       margin-top: 15px;
     }
+    .message-box{
+      width: 100%;
+      padding: 20px;
+      color: black;
+    }
   </style>
 </head>
 
@@ -68,7 +73,7 @@
               <input type="text" name="phone" placeholder="Phone" />
             </div>
             <div>
-              <input type="text" name="message" class="message-box" placeholder="Message" required/>
+              <textarea name="message" class="message-box" placeholder="Message" required></textarea>
             </div>
             <div class="d-flex ">
               <button type="submit">SEND</button>
