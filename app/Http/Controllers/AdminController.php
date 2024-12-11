@@ -24,7 +24,7 @@ class AdminController extends Controller
             'category.string' => 'Category name must be a valid string.',
             'category.max' => 'Category name must not exceed 255 characters.',
         ]);
-        
+
         $category = new Category;
         $category->category_name = $request->category;
         $category->save();
@@ -89,7 +89,7 @@ class AdminController extends Controller
     }
 
     public function view_product(){
-        $products = Product::paginate(5);
+        $products = Product::orderBy('created_at', 'desc')->paginate(5);
         return view('admin.view_product', compact('products'));
     }
 

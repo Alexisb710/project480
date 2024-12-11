@@ -30,6 +30,12 @@
         width: 450px;
         height: 100px;
       }
+      .nav_back {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        width: 1000px;
+      }
     </style>
   </head>
   <body>
