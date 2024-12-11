@@ -17,6 +17,14 @@ class AdminController extends Controller
     }
 
     public function add_category(Request $request) {
+        $request->validate([
+            'category' => 'required|string|max:255', // Category must not be empty and within 255 characters
+        ], [
+            'category.required' => 'Category name is required.',
+            'category.string' => 'Category name must be a valid string.',
+            'category.max' => 'Category name must not exceed 255 characters.',
+        ]);
+        
         $category = new Category;
         $category->category_name = $request->category;
         $category->save();
