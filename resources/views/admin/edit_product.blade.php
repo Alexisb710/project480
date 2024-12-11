@@ -45,6 +45,12 @@
           <div class="container-fluid">
             <h1>Update Product</h1>
 
+            <div class="nav_back">
+              <a href="{{url('view_product')}}" class="btn btn-primary">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> Back
+              </a>
+            </div>
+
             <div class="div_design">
               
               <form action="{{url('update_product', $product->id)}}" method="post" enctype="multipart/form-data">
