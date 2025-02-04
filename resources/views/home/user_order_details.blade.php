@@ -108,7 +108,7 @@
           @foreach ($orderItems as $orderItem)
           <tr>
               <td>
-                <img src="/products/{{$orderItem->product->image}}" width="120">
+                <img src="{{ Storage::disk('s3')->url($orderItem->product->image) }}" width="120" alt="{{ $orderItem->product->title }}">
               </td>
               <td>{{$orderItem->product->title}}</td>
               <td>{{$orderItem->quantity}}</td>

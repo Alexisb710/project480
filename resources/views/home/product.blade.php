@@ -130,7 +130,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="box">
             <div class="img-box">
-              <img src="products/{{$product->image}}">
+              <img src="{{ Storage::disk('s3')->url($product->image) }}" alt="{{ $product->title }}">
             </div>
             <div class="detail-box">
               <h6>

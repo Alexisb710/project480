@@ -59,7 +59,7 @@
             <div class="col-md-12">
               <div class="box">
                   <div class="div_center">
-                    <img width="300" src="/products/{{$product->image}}">
+                    <img width="300" src="{{ Storage::disk('s3')->url($product->image) }}">
                   </div>
                   <div class="detail-box">
                     <h6>{{$product->title}}</h6>

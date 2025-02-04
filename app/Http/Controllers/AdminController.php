@@ -7,6 +7,8 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 
 class AdminController extends Controller
@@ -73,13 +75,28 @@ class AdminController extends Controller
         $product->quantity = $request->qty;
         $product->category = $request->category;
 
-        // Saving the image
-        $image = $request->image;
-        if ($image){
-            $imagename = time().'.'.$image->getClientOriginalExtension();
-            $request->image->move('products', $imagename);
+        // Handle image upload
+        $image = $request->file('image');
+        if ($image) {
+            // Extract original filename (without extension)
+            $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
 
-            $product->image = $imagename;
+            // Remove special characters from filename (keep letters, numbers, hyphens)
+            $sanitizedOriginalName = preg_replace('/[^A-Za-z0-9\-]/', '', $originalName);
+
+            // Create a unique filename with timestamp
+            $imageName = $sanitizedOriginalName . '.' . time() . '.' . $image->getClientOriginalExtension();
+
+            // Delete the old image from S3 (if it exists)
+            if ($product->image && Storage::disk('s3')->exists($product->image)) {
+                Storage::disk('s3')->delete($product->image);
+            }
+
+            // Upload the new image to S3 with public-read access
+            $path = Storage::disk('s3')->putFileAs('products', $image, $imageName, 'public');
+
+            // Save the S3 image path in the database
+            $product->image = 'products/' . $imageName;
         }
         $product->save();
 
@@ -90,6 +107,18 @@ class AdminController extends Controller
 
     public function view_product(){
         $products = Product::orderBy('created_at', 'desc')->paginate(5);
+
+        $products = Product::paginate(5);
+
+        // Use transform to modify each item in the paginated collection
+        $products->getCollection()->transform(function ($product) {
+            if ($product->image) {
+                $product->image_url = Storage::disk('s3')->url($product->image);
+            } else {
+                $product->image_url = null;
+            }
+            return $product;
+        });
         return view('admin.view_product', compact('products'));
     }
 
@@ -97,14 +126,30 @@ class AdminController extends Controller
         $product = Product::find($id);
         $image_path = public_path('products/' .$product->image);
 
-        if (file_exists($image_path)) {
-            unlink($image_path);
-        }
+        // if (file_exists($image_path)) {
+        //     unlink($image_path);
+        // }
 
-        $product->delete();
+        // $product->delete();
 
-        toastr()->timeOut(5000)->closeButton()->success('Product Deleted Successfully');
+        // toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Product Deleted Successfully');
 
+        // return redirect()->back();
+
+        if ($product) {
+            // Delete the image from S3
+            if ($product->image) {
+                Storage::disk('s3')->delete($product->image); // Deletes the image from S3 bucket
+            }
+    
+            // Delete the product from the database
+            $product->delete();
+    
+            toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->success('Product Deleted Successfully');
+            } else {
+                toastr()->timeOut(5000)->positionClass('toast-top-center')->closeButton()->error('Product not found.');
+            }
+            
         return redirect()->back();
     }
 
@@ -121,14 +166,27 @@ class AdminController extends Controller
         $product->category = $request->category;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
-        //update image
-        // Saving the image
-        $image = $request->image;
-        if ($image){
-            $imagename = time().'.'.$image->getClientOriginalExtension();
-            $request->image->move('products', $imagename);
+        
+        // Handle image upload
+        $image = $request->file('image');
+        if ($image) {
+            // Extract and sanitize the original filename
+            $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $sanitizedOriginalName = preg_replace('/[^A-Za-z0-9\-]/', '', $originalName);
 
-            $product->image = $imagename;
+            // Generate the correct filename format
+            $imageName = $sanitizedOriginalName . '.' . time() . '.' . $image->getClientOriginalExtension();
+
+            // Delete the old image from S3 (if it exists)
+            if ($product->image && Storage::disk('s3')->exists($product->image)) {
+                Storage::disk('s3')->delete($product->image);
+            }
+
+            // Upload the new image to S3 with public-read access
+            $path = Storage::disk('s3')->putFileAs('products', $image, $imageName, 'public');
+
+            // Save the S3 image path in the database
+            $product->image = 'products/' . $imageName;
         }
         $product->save();
 

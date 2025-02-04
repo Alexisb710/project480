@@ -90,7 +90,10 @@
                 ?>
                 @foreach ($order->items as $item)
                 <tr>
-                  <td><img src="/products/{{ $item->product->image }}" width="100" alt="{{ $item->product->title }}"></td>
+                  <td><img 
+                    src="{{ Storage::disk('s3')->url($item->product->image) }}" 
+                    width="100" 
+                    alt="{{ $item->product->title }}"></td>
                   <td>{{ $item->product->title }}</td>
                   <td>{{ $item->quantity }}</td>
                   <td>${{ number_format($item->price, 2) }}</td>

@@ -36,7 +36,7 @@
         <tr id="cart-item-{{ $cartItem->id }}">
           <td>
             <a class="btn btn-light" href="{{ url('product_details', $cartItem->product->id) }}">
-            <img src="/products/{{$cartItem->product->image}}" width="150"></a>
+              <img src="{{ Storage::disk('s3')->url($cartItem->product->image) }}" width="150" alt="{{ $cartItem->product->title }}"></a>
           </td>
           <td>{{$cartItem->product->title}}</td>
           {{-- <td>{{$cartItem->quantity}}</td> --}}

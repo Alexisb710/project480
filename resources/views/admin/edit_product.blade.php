@@ -93,7 +93,7 @@
 
                   <div>
                     <label for="image">Current Image</label>
-                    <img width="150" src="/products/{{$product->image}}">
+                    <img width="150" src="{{ Storage::disk('s3')->url($product->image) }}">
                   </div>
 
                   <div>
