@@ -295,9 +295,9 @@ class HomeController extends Controller
         } else {
             $count = 0;
         }
-        $products = Product::where('title', 'LIKE', '%'.$search.'%')
-                            ->orWhere('category', 'LIKE', '%'.$search.'%')
-                            ->orWhere('price', 'LIKE', '%'.$search.'%')
+        $products = Product::where('title', 'LIKE', "%{$search}%")
+                            ->orWhere('category', 'LIKE', "%{$search}%")
+                            ->orWhere('price', 'LIKE', "%{$search}%")
                             ->paginate(8);
         return view('home.shop', compact('products', 'categories', 'count'));
     }
