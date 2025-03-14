@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -125,3 +126,9 @@ Route::controller(PaymentController::class)->group(function(){
 
 Route::post('update_cart_ajax/{id}', [HomeController::class, 'update_cart_ajax'])
     ->middleware(['auth', 'verified']);
+
+
+
+Route::get('/status', function (Request $request) {
+    return response()->json(['status' => 'ok'], 200);
+});
