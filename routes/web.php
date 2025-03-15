@@ -128,7 +128,6 @@ Route::post('update_cart_ajax/{id}', [HomeController::class, 'update_cart_ajax']
     ->middleware(['auth', 'verified']);
 
 
-
 Route::get('/status', function (Request $request) {
     return response()->json(['status' => 'ok'], 200);
 });
