@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: project480.zip
+  - source: /
     destination: /tmp/deployment
 
 hooks:
