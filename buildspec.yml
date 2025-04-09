@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.3
+      nodejs: 22
+    commands:
+      - echo "Installing Composer and npm dependencies..."
+      - composer install --no-dev --prefer-dist
+      - npm install
+  build:
+    commands:
+      - echo "Building Laravel front-end assets..."
+      - npm run build
+  post_build:
+    commands:
+      - echo "Zipping project for deployment..."
+      - zip -r project480.zip .
+artifacts:
+  files:
+    - project480.zip

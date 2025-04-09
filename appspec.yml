@@ -1,0 +1,11 @@
+version: 0.0
+os: linux
+
+files:
+  - source: project480.zip
+    destination: /tmp/deployment
+
+hooks:
+  AfterInstall:
+    - location: scripts/deploy_laravel.sh
+      runas: root
