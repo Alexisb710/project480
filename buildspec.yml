@@ -16,7 +16,7 @@ phases:
   post_build:
     commands:
       - echo "Zipping project for deployment..."
-      - zip -r project480.zip .
+      - zip -r ../project480.zip .
 artifacts:
   files:
-    - project480.zip
+    - ../project480.zip
