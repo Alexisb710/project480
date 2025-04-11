@@ -12,9 +12,11 @@ echo "Starting deployment script..."
 # Clean up existing app
 rm -rf $APP_DIR
 
-# Create directory and extract new build
+# Create directory
 mkdir -p $APP_DIR
-unzip -o $DEPLOY_DIR/project480.zip -d $APP_DIR
+
+# Copy new build contents to app directory
+cp -r $DEPLOY_DIR/* $APP_DIR
 
 cd $APP_DIR
 
