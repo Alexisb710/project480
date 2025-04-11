@@ -37,7 +37,7 @@ chmod -R 775 storage bootstrap/cache
 # Laravel setup
 echo "Running Laravel setup..."
 /usr/local/bin/composer install --no-dev --optimize-autoloader
-php artisan migrate --force
+# php artisan migrate --force
 php artisan config:clear
 php artisan config:cache
 php artisan route:cache
