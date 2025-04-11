@@ -17,7 +17,8 @@ phases:
     commands:
       - echo "Zipping deployment package including appspec.yml and scripts..."
       - mkdir -p deployment
-      - cp -r * deployment/
+      - shopt -s extglob
+      - cp -r !(deployment) deployment/
       - cp appspec.yml deployment/
       - cp -r scripts/ deployment/
       - cd deployment && zip -r ../project480.zip . && cd ..
