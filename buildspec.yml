@@ -15,8 +15,13 @@ phases:
       - npm run build
   post_build:
     commands:
-      - echo "Zipping project for deployment..."
-      - zip -r ../project480.zip .
+      - echo "Zipping deployment package including appspec.yml and scripts..."
+      - mkdir -p deployment
+      - cp -r * deployment/
+      - cp appspec.yml deployment/
+      - cp -r scripts/ deployment/
+      - cd deployment && zip -r ../project480.zip . && cd ..
+
 artifacts:
   files:
-    - ../project480.zip
+    - project480.zip
