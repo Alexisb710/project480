@@ -21,4 +21,5 @@ phases:
 artifacts:
   files:
     - project480.zip
+  base-directory: ..
   discard-paths: yes
