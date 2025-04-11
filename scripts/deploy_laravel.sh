@@ -24,6 +24,7 @@ rm -rf "$APP_DIR"
 # Copy raw files into app directory (assumes artifacts are extracted raw)
 echo "Creating new app directory and copying files..."
 mkdir -p "$APP_DIR"
+
 cp -r "$DEPLOY_DIR"/* "$APP_DIR"
 
 
