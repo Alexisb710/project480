@@ -13,13 +13,8 @@ phases:
     commands:
       - echo "Building Laravel front-end assets..."
       - npm run build
-  post_build:
-    commands:
-      - echo "Zipping project for deployment..."
-      - cd ..
-      - zip -r project480.zip * .[^.]*
+
 artifacts:
   files:
-    - project480.zip
-  base-directory: ..
-  discard-paths: yes
+    - "**/*"
+  discard-paths: no
