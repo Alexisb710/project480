@@ -27,7 +27,6 @@ mkdir -p "$APP_DIR"
 
 cp -r "$DEPLOY_DIR"/* "$APP_DIR"
 
-
 cd "$APP_DIR"
 
 # Permissions
