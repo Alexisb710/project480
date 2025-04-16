@@ -2,6 +2,7 @@
 <html>
 <head>
     @include('home.css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Card Payment System for Adventures and Sportings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -40,7 +41,7 @@
                                 method="post" 
                                 class="require-validation"
                                 data-cc-on-file="false"
-                                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                                data-stripe-publishable-key="{{ config('services.stripe.key') }}" 
                                 id="payment-form">
                             @csrf
 

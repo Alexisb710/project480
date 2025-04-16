@@ -29,7 +29,9 @@ class PaymentController extends Controller
     }
 
     public function stripePost(Request $request, $value) {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        try{
+        // Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         $name = Auth::user()->name;
         $address = Auth::user()->address;
@@ -80,5 +82,9 @@ class PaymentController extends Controller
         toastr()->timeOut(5000)->closeButton()->success('Order has been placed!');
         
         return redirect('/dashboard');
+    } catch (\Exception $e) {
+        \Log::error("Stripe Payment Failed: " . $e->getMessage());
+        return back()->withErrors(['stripe' => 'Payment failed. Check logs.']);
+    }
     }
 }
