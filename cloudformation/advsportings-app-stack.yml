@@ -20,7 +20,7 @@ Parameters:
 
   AMIID:
     Type: String
-    Default: ami-079968daaace3ee5f
+    Default: ami-0db83236b92cb248b
 
   InstanceSecurityGroup:
     Type: String
@@ -237,6 +237,9 @@ Resources:
       Tags:
         - Key: Name
           Value: project-app-instance
+          PropagateAtLaunch: true
+        - Key: CodeDeployGroup
+          Value: project480
           PropagateAtLaunch: true
 
   # Create the DNS record pointing to the ALB

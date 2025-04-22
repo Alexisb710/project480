@@ -27,7 +27,7 @@ class ContactController extends Controller
 
         // Send email
         Mail::send('emails.contact_email', $data, function ($message) use ($request) {
-            $message->to(env('MAIL_USERNAME'))
+            $message->to(config('mail.admin_address'))
                     ->subject('New Contact Form Submission');
         });
 
