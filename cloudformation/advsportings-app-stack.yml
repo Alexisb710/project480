@@ -1,0 +1,327 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation template to launch our E-commerce app using a pre-baked AMI to launch EC2, ALB, Launch Template, Auto Scaling Group, WAF Rules, and Route 53 record to point to ALB.
+
+Parameters:
+  VPCID:
+    Type: String
+    Default: vpc-002951ce7c26979ad
+
+  Subnet1:
+    Type: String
+    Default: subnet-050a23c5bc16cac96
+
+  Subnet2:
+    Type: String
+    Default: subnet-01c09b1a344bad2ec
+
+  ALBSecurityGroup:
+    Type: String
+    Default: sg-068b1451c971f4c79
+
+  AMIID:
+    Type: String
+    Default: ami-079968daaace3ee5f
+
+  InstanceSecurityGroup:
+    Type: String
+    Default: sg-0a7b727a69ef6a2aa
+
+  CertificateARN:
+    Type: String
+    Default: arn:aws:acm:us-west-1:242201300836:certificate/aa19ad66-6ccd-4986-ac43-19cfa6e0001e
+
+  DBSecretArn:
+    Type: String
+    Description: The ARN of the AWS Secrets Manager secret containing the DB password (key 'db_password').
+
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: The ID of the existing Route 53 Hosted Zone for our domain.
+  DomainName:
+    Type: String
+    Description: The domain name.
+
+Resources:
+  EC2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: InstanceAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              # Permission to get the DB password secret
+              - Effect: Allow
+                Action: secretsmanager:GetSecretValue
+                Resource: !Ref DBSecretArn
+  # Add this Instance Profile to attach the role to EC2
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2InstanceRole
+
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: !Ref AMIID
+        InstanceType: t3.micro
+        SecurityGroupIds:
+          - !Ref InstanceSecurityGroup
+        IamInstanceProfile: # Assign the role
+          Arn: !GetAtt EC2InstanceProfile.Arn
+        UserData:
+          Fn::Base64: !Sub
+            - |
+              #!/bin/bash
+              # Use -xe for debugging: exit immediately if a command exits with a non-zero status, and print commands and their arguments as they are executed.
+              exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
+              echo "Starting UserData script execution"
+              sudo apt update -y
+
+              # Install prerequisites: curl, unzip are needed for AWS CLI install.
+              # Also install others needed: jq, mysql-client, sed, apache2
+              echo "Installing prerequisite packages..."
+              sudo apt install -y curl unzip jq mysql-client sed apache2
+
+              # --- Install AWS CLI v2 ---
+              echo "Downloading and installing AWS CLI v2..."
+              # Download the installer
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+              # Unzip the installer
+              unzip awscliv2.zip
+
+              # Run the installer (installs to /usr/local/aws-cli and creates symlink at /usr/local/bin/aws)
+              sudo ./aws/install
+
+              # Clean up the downloaded zip and extracted directory
+              rm -f awscliv2.zip
+              rm -rf aws
+
+              # Verify installation (optional - output goes to logs)
+              echo "AWS CLI Version:"
+              aws --version
+              echo "AWS CLI installed successfully."
+              # --- End AWS CLI v2 Install ---
+
+              sudo systemctl start apache2
+              sudo systemctl enable apache2
+
+              # Define the target file and the RDS endpoint (substituted by CloudFormation)
+              ENV_FILE="/var/www/html/project480/.env"
+              DB_NAME="project480"
+              DUMP_FILE="/var/www/html/project480/database/dump/project_feb_7_dump.sql"
+
+              echo "Target .env file: $ENV_FILE"
+              echo "Importing RDS Endpoint: ${RDSEndpointImported}"
+
+              # --- Update DB_HOST in .env file ---
+              # Check if DB_HOST line already exists
+              if sudo grep -q '^DB_HOST=' "$ENV_FILE"; then
+                echo "DB_HOST line found. Replacing it."
+                # Using sed to replace the entire line starting with DB_HOST=
+                # Using ~ as a delimiter in sed to avoid conflicts if endpoint contains /
+                sudo sed -i "s~^DB_HOST=.*~DB_HOST=${RDSEndpointImported}~" "$ENV_FILE"
+                echo "sed command executed to replace DB_HOST."
+              else
+                echo "DB_HOST line not found. Appending it."
+                # Append the DB_HOST line if it doesn't exist
+                echo "DB_HOST=${RDSEndpointImported}" | sudo tee -a "$ENV_FILE" > /dev/null
+                echo "tee command executed to append DB_HOST."
+              fi
+              echo "Updated DB_HOST in $ENV_FILE."
+
+              # --- Database Dump Import ---
+              echo "Attempting to import database dump."
+              DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id "${DBSecretArn}" --query SecretString --output text --region "${AWS::Region}" | jq -r .db_password)
+
+              if [ -z "$DB_PASSWORD" ]; then
+                echo "ERROR: Failed to retrieve DB password from Secrets Manager."
+                exit 1
+              fi
+              echo "DB Password retrieved."
+
+              if [ ! -f "$DUMP_FILE" ]; then
+                echo "ERROR: Database dump file not found at $DUMP_FILE"
+                exit 1
+              fi
+
+              echo "Waiting 15 seconds for DB readiness..."
+              sleep 15
+
+              echo "Running mysql import command..."
+              if mysql -h "${RDSEndpointImported}" -u admin -p"$DB_PASSWORD" "$DB_NAME" < "$DUMP_FILE"; then
+                echo "SUCCESS: Database dump imported successfully."
+              else
+                echo "ERROR: Failed to import database dump."
+                exit 1
+              fi
+
+              # Clear caches and config files for updated versions
+              cd /var/www/html/project480/
+              php artisan config:clear
+              php artisan config:cache
+
+              # --- Restart Apache ---
+              sudo systemctl restart apache2
+
+              echo "Finished UserData script execution"
+            # This map defines the variables available for substitution within the script above
+            - RDSEndpointImported: !ImportValue ProjectRDSEndpoint
+              DBSecretArn: !Ref DBSecretArn
+      LaunchTemplateName: project-launch-template
+
+  AppLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: project-app-alb
+      Scheme: internet-facing
+      Subnets:
+        - !Ref Subnet1
+        - !Ref Subnet2
+      SecurityGroups:
+        - !Ref ALBSecurityGroup
+      Type: application
+
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: project-target-group
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPCID
+      TargetType: instance
+      HealthCheckPath: /
+      HealthCheckIntervalSeconds: 30
+      HealthyThresholdCount: 4
+      UnhealthyThresholdCount: 2
+
+  HTTPSListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref AppLoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: !Ref CertificateARN
+
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+        - !Ref Subnet1
+        - !Ref Subnet2
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+      MinSize: "1"
+      MaxSize: "2"
+      DesiredCapacity: "1"
+      TargetGroupARNs:
+        - !Ref ALBTargetGroup
+      HealthCheckType: EC2
+      HealthCheckGracePeriod: 300
+      Tags:
+        - Key: Name
+          Value: project-app-instance
+          PropagateAtLaunch: true
+
+  # Create the DNS record pointing to the ALB
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: A # 'A' record for Alias to ALB
+      AliasTarget:
+        # Using the specific Hosted Zone ID associated with ALBs in same region
+        HostedZoneId: !GetAtt AppLoadBalancer.CanonicalHostedZoneID
+        DNSName: !GetAtt AppLoadBalancer.DNSName
+        EvaluateTargetHealth: false
+
+  # Define the WebACL
+  WebACL:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: project480-webacl # Choose a name
+      Scope: REGIONAL # Must be REGIONAL for ALB
+      DefaultAction:
+        Allow: {} # Or Block: {}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: project480-webacl-metric # Choose a metric name
+      Rules: # Add the rules from your screenshot
+        - Name: AWS-ManagedRulesCommonRuleSet
+          Priority: 10 # Priorities must be unique, lower evaluates first
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesCommonRuleSet
+          OverrideAction:
+            None: {} # Use actions defined in the rule group
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: project480-AWSCommonRules-metric
+        - Name: AWS-ManagedRulesKnownBadInputsRuleSet
+          Priority: 20
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesKnownBadInputsRuleSet
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: project480-AWSBadInputsRules-metric
+        - Name: AWS-ManagedRulesAmazonIpReputationList
+          Priority: 30
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesAmazonIpReputationList
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: project480-AWSIpReputation-metric
+        - Name: AWS-ManagedRulesSQLiRuleSet
+          Priority: 40
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesSQLiRuleSet
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: project480-AWSSQLiRules-metric
+
+  # Associate the WebACL with the Load Balancer
+  WebACLAssociation:
+    Type: AWS::WAFv2::WebACLAssociation
+    Properties:
+      ResourceArn: !Ref AppLoadBalancer # Reference the ALB
+      WebACLArn: !GetAtt WebACL.Arn # Reference the WebACL created above
+
+Outputs:
+  LoadBalancerDNS:
+    Description: DNS Name of the load balancer
+    Value: !GetAtt AppLoadBalancer.DNSName

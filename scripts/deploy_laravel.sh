@@ -2,11 +2,10 @@
 
 set -e  # Exit on any error
 
+# --- Configuration ---
 APP_DIR="/var/www/html/project480"
 DEPLOY_DIR="/tmp/deployment"
 LOG_FILE="/var/log/deploy_laravel.log"
-
-# --- Configuration ---
 AWS_REGION="us-west-1"
 PARAMETER_PATH="/project480/prod" # The path prefix for the parameters in Parameter Store
 # --- End Configuration ---

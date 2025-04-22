@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation template for RDS MySQL instance with output export of the RDS endpoint.
+
+Parameters:
+  DBName:
+    Type: String
+    Default: project480
+
+  DBUsername:
+    Type: String
+    NoEcho: true
+    Default: admin
+
+  DBSecretArn:
+    Type: String
+    Description: The ARN of the AWS Secrets Manager secret containing the DB password (key 'db_password').
+
+  DBInstanceClass:
+    Type: String
+    Default: db.t4g.micro
+
+  RDSSecurityGroup:
+    Type: String
+    Default: sg-0b167bcae4f1eaf6c # ALEXIS-DB-SG
+
+  Subnet1:
+    Type: String
+    Default: subnet-050a23c5bc16cac96
+
+  Subnet2:
+    Type: String
+    Default: subnet-01c09b1a344bad2ec
+
+  DBSubnetGroupName:
+    Type: String
+    Default: rds-subnet-group
+
+Resources:
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for RDS
+      DBSubnetGroupName: !Ref DBSubnetGroupName
+      SubnetIds:
+        - !Ref Subnet1
+        - !Ref Subnet2
+
+  MyRDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref DBName
+      Engine: mysql
+      EngineVersion: 8.0.40
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Join [
+          "",
+          [
+            "{{resolve:secretsmanager:",
+            !Ref DBSecretArn, # References the added parameter
+            ":SecretString:db_password}}", # Targets the 'db_password' key from my secret
+          ],
+        ]
+      DBInstanceClass: !Ref DBInstanceClass
+      AllocatedStorage: 20
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref RDSSecurityGroup
+      PubliclyAccessible: true
+      DeletionProtection: false
+      MultiAZ: false
+      BackupRetentionPeriod: 7
+
+# Export the RDS endpoint
+Outputs:
+  RDSHost:
+    Description: RDS endpoint to be used by EC2
+    Value: !GetAtt MyRDSInstance.Endpoint.Address
+    Export:
+      Name: ProjectRDSEndpoint
