@@ -34,15 +34,33 @@ echo "Files copied using rsync."
 cd "$APP_DIR"
 
 # --- Start .env file creation ---
-echo "Creating .env file from .env.example..."
+# echo "Creating .env file from .env.example..."
 
-if [ ! -f ".env.example" ]; then
-    echo "ERROR: .env.example not found in $APP_DIR!"
-    exit 1
+# if [ ! -f ".env.example" ]; then
+#     echo "ERROR: .env.example not found in $APP_DIR!"
+#     exit 1
+# fi
+
+# cp .env.example .env
+# echo "Copied .env.example to .env"
+
+# --- Start .env file creation ---
+ENV_FILE="$APP_DIR/.env"
+
+if [ -f "$ENV_FILE" ]; then
+    echo "$ENV_FILE already exists — skipping overwrite."
+else
+    echo "Creating .env file from .env.example..."
+
+    if [ ! -f "$APP_DIR/.env.example" ]; then
+        echo "ERROR: .env.example not found in $APP_DIR!"
+        exit 1
+    fi
+
+    cp "$APP_DIR/.env.example" "$ENV_FILE"
+    echo "Copied .env.example to $ENV_FILE"
 fi
 
-cp .env.example .env
-echo "Copied .env.example to .env"
 
 # Define function for updating .env to avoid repetition
 update_env_var() {
@@ -107,6 +125,7 @@ chmod -R 775 storage bootstrap/cache
 # Laravel setup
 echo "Running Laravel setup..."
 export COMPOSER_ALLOW_SUPERUSER=1
+# /usr/local/bin/composer install --no-dev --optimize-autoloader
 composer install --no-dev --optimize-autoloader
 # php artisan migrate --force
 php artisan config:clear
