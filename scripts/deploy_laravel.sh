@@ -45,6 +45,7 @@ cd "$APP_DIR"
 # echo "Copied .env.example to .env"
 
 # --- Start .env file creation ---
+echo "Checking if .env file exists"
 ENV_FILE="$APP_DIR/.env"
 
 if [ -f "$ENV_FILE" ]; then
