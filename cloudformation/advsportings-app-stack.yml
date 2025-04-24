@@ -238,9 +238,6 @@ Resources:
         - Key: Name
           Value: project-app-instance
           PropagateAtLaunch: true
-        - Key: CodeDeployGroup
-          Value: project480
-          PropagateAtLaunch: true
 
   # Create the DNS record pointing to the ALB
   DNSRecord:
