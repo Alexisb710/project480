@@ -169,7 +169,9 @@ Resources:
 
               # Clear caches and config files for updated versions
               cd /var/www/html/project480/
+              rm -rf bootstrap/cache/*.php
               php artisan config:clear
+              php artisan cache:clear
               php artisan config:cache
 
               # --- Restart Apache ---
