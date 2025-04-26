@@ -112,6 +112,12 @@ echo "$PARAMETERS_JSON" | jq -c '.[]' | while IFS= read -r parameter_line; do
 done
 echo ".env population attempt complete."
 
+# Laravel setup
+echo "Running Laravel setup..."
+export COMPOSER_ALLOW_SUPERUSER=1
+# /usr/local/bin/composer install --no-dev --optimize-autoloader
+composer install --no-dev --optimize-autoloader
+
 echo "Generating APP_KEY..."
 php artisan key:generate --force # Generates and automatically adds/updates APP_KEY in .env
 echo "APP_KEY generated."
@@ -123,11 +129,6 @@ chown -R www-data:www-data .
 chmod 640 .env
 chmod -R 775 storage bootstrap/cache
 
-# Laravel setup
-echo "Running Laravel setup..."
-export COMPOSER_ALLOW_SUPERUSER=1
-# /usr/local/bin/composer install --no-dev --optimize-autoloader
-composer install --no-dev --optimize-autoloader
 # php artisan migrate --force
 php artisan config:clear
 php artisan config:cache
