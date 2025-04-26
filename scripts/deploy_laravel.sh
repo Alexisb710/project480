@@ -8,6 +8,8 @@ DEPLOY_DIR="/tmp/deployment"
 LOG_FILE="/var/log/deploy_laravel.log"
 AWS_REGION="us-west-1"
 PARAMETER_PATH="/project480/prod" # The path prefix for the parameters in Parameter Store
+ENV_FILE="$APP_DIR/.env"
+BACKUP_ENV_FILE="/tmp/env_backup"
 # --- End Configuration ---
 
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -21,6 +23,12 @@ fi
 
 ls -la "$DEPLOY_DIR"
 
+if [ -f "$ENV_FILE" ]; then
+    echo "⚠️  Found existing .env file — backing it up"
+    cp "$ENV_FILE" "$BACKUP_ENV_FILE"
+else
+    echo "No existing .env file found — nothing to back up"
+fi
 
 # Clean up existing app directory
 echo "Removing existing app directory: $APP_DIR"
@@ -30,6 +38,14 @@ echo "Creating new app directory and copying files..."
 mkdir -p "$APP_DIR"
 rsync -av "$DEPLOY_DIR/" "$APP_DIR/"
 echo "Files copied using rsync."
+
+# --- Restore .env if backup exists ---
+if [ -f "$BACKUP_ENV_FILE" ]; then
+    echo "✅ Restoring .env from backup"
+    cp "$BACKUP_ENV_FILE" "$ENV_FILE"
+else
+    echo "⚠️  No .env backup to restore"
+fi
 
 cd "$APP_DIR"
 
@@ -46,7 +62,6 @@ cd "$APP_DIR"
 
 # --- Start .env file creation ---
 echo "Checking if .env file exists"
-ENV_FILE="$APP_DIR/.env"
 
 if [ -f "$ENV_FILE" ]; then
     echo "$ENV_FILE already exists — skipping overwrite."
