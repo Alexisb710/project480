@@ -7,7 +7,7 @@ APP_DIR="/var/www/html/project480"
 DEPLOY_DIR="/tmp/deployment"
 LOG_FILE="/var/log/deploy_laravel.log"
 AWS_REGION="us-west-1"
-PARAMETER_PATH="/project480/prod" # The path prefix for the parameters in Parameter Store
+# PARAMETER_PATH="/project480/prod" # The path prefix for the parameters in Parameter Store
 ENV_FILE="$APP_DIR/.env"
 BACKUP_ENV_FILE="/tmp/env_backup"
 # --- End Configuration ---
@@ -78,54 +78,54 @@ else
 fi
 
 
-# Define function for updating .env to avoid repetition
-update_env_var() {
-    local key=$1
-    local value=$2
-    # Use '#' as delimiter for sed, safer for values with '/'
-    # Escape basic special characters for sed (&, /, \)
-    local escaped_value=$(echo "$value" | sed -e 's/[\/&]/\\&/g' -e 's/\\/\\\\/g')
-    # Check if key exists in the file before attempting replacement
-    if grep -q "^${key}=" .env; then
-      sed -i "s#^${key}=.*#${key}=${escaped_value}#" .env
-      echo "Updated ${key} in .env"
-    else
-      echo "WARN: Key ${key} not found in .env.example template, skipping update."
-    fi
-}
+# # Define function for updating .env to avoid repetition
+# update_env_var() {
+#     local key=$1
+#     local value=$2
+#     # Use '#' as delimiter for sed, safer for values with '/'
+#     # Escape basic special characters for sed (&, /, \)
+#     local escaped_value=$(echo "$value" | sed -e 's/[\/&]/\\&/g' -e 's/\\/\\\\/g')
+#     # Check if key exists in the file before attempting replacement
+#     if grep -q "^${key}=" .env; then
+#       sed -i "s#^${key}=.*#${key}=${escaped_value}#" .env
+#       echo "Updated ${key} in .env"
+#     else
+#       echo "WARN: Key ${key} not found in .env.example template, skipping update."
+#     fi
+# }
 
-echo "Fetching parameters from Parameter Store path: $PARAMETER_PATH"
-# Fetch SecureStrings with decryption, handle potential errors
-PARAMETERS_JSON=$(aws ssm get-parameters-by-path --path "$PARAMETER_PATH" --with-decryption --query "Parameters" --output json --region "$AWS_REGION")
+# echo "Fetching parameters from Parameter Store path: $PARAMETER_PATH"
+# # Fetch SecureStrings with decryption, handle potential errors
+# PARAMETERS_JSON=$(aws ssm get-parameters-by-path --path "$PARAMETER_PATH" --with-decryption --query "Parameters" --output json --region "$AWS_REGION")
 
-if [ -z "$PARAMETERS_JSON" ] || [ "$PARAMETERS_JSON" == "null" ] || [ "$PARAMETERS_JSON" == "[]" ]; then
-    echo "ERROR: Failed to fetch parameters from Parameter Store or no parameters found at path $PARAMETER_PATH!"
-    # Attempt to show raw output for debugging if jq is available
-    if command -v jq &> /dev/null; then
-        echo "Raw output (if any): $(aws ssm get-parameters-by-path --path "$PARAMETER_PATH" --with-decryption --output json --region "$AWS_REGION" || echo 'Error running command')"
-    fi
-    exit 1
-fi
-echo "Parameters fetched successfully."
+# if [ -z "$PARAMETERS_JSON" ] || [ "$PARAMETERS_JSON" == "null" ] || [ "$PARAMETERS_JSON" == "[]" ]; then
+#     echo "ERROR: Failed to fetch parameters from Parameter Store or no parameters found at path $PARAMETER_PATH!"
+#     # Attempt to show raw output for debugging if jq is available
+#     if command -v jq &> /dev/null; then
+#         echo "Raw output (if any): $(aws ssm get-parameters-by-path --path "$PARAMETER_PATH" --with-decryption --output json --region "$AWS_REGION" || echo 'Error running command')"
+#     fi
+#     exit 1
+# fi
+# echo "Parameters fetched successfully."
 
-echo "Populating .env file from parameters..."
-# Use jq to iterate through the JSON array from get-parameters-by-path
-# Output format: [{"Name": "/path/key", "Type": "SecureString", "Value": "value"}, ...]
-echo "$PARAMETERS_JSON" | jq -c '.[]' | while IFS= read -r parameter_line; do
-    # Extract full name and value
-    param_name=$(echo "$parameter_line" | jq -r '.Name')
-    param_value=$(echo "$parameter_line" | jq -r '.Value')
+# echo "Populating .env file from parameters..."
+# # Use jq to iterate through the JSON array from get-parameters-by-path
+# # Output format: [{"Name": "/path/key", "Type": "SecureString", "Value": "value"}, ...]
+# echo "$PARAMETERS_JSON" | jq -c '.[]' | while IFS= read -r parameter_line; do
+#     # Extract full name and value
+#     param_name=$(echo "$parameter_line" | jq -r '.Name')
+#     param_value=$(echo "$parameter_line" | jq -r '.Value')
 
-    # Extract the short key name (e.g., 'db_password' from '/project480/prod/db_password')
-    param_key_short=$(basename "$param_name")
-    # Convert the short key name to upper case to match .env convention (e.g., DB_PASSWORD)
-    param_key_upper=$(echo "$param_key_short" | tr '[:lower:]' '[:upper:]')
+#     # Extract the short key name (e.g., 'db_password' from '/project480/prod/db_password')
+#     param_key_short=$(basename "$param_name")
+#     # Convert the short key name to upper case to match .env convention (e.g., DB_PASSWORD)
+#     param_key_upper=$(echo "$param_key_short" | tr '[:lower:]' '[:upper:]')
 
-    # Update the .env file using the upper-case key name
-    # The update_env_var function will handle the sed replacement
-    update_env_var "$param_key_upper" "$param_value"
-done
-echo ".env population attempt complete."
+#     # Update the .env file using the upper-case key name
+#     # The update_env_var function will handle the sed replacement
+#     update_env_var "$param_key_upper" "$param_value"
+# done
+# echo ".env population attempt complete."
 
 # Laravel setup
 echo "Running Laravel setup..."
