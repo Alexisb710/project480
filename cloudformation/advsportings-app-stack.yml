@@ -61,6 +61,13 @@ Resources:
               - Effect: Allow
                 Action: secretsmanager:GetSecretValue
                 Resource: !Ref DBSecretArn
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                Resource:
+                  - arn:aws:s3:::codepipelinestartertempla-codepipelineartifactsbuc-dwpmd1uappe5
+                  - arn:aws:s3:::codepipelinestartertempla-codepipelineartifactsbuc-dwpmd1uappe5/*
   # Add this Instance Profile to attach the role to EC2
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
