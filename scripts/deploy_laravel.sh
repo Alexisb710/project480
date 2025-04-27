@@ -24,19 +24,19 @@ fi
 ls -la "$DEPLOY_DIR"
 
 if [ -f "$ENV_FILE" ]; then
-    echo "⚠️  Found existing .env file — backing it up"
+    echo "Found existing .env file — backing it up"
     cp "$ENV_FILE" "$BACKUP_ENV_FILE"
 else
     echo "No existing .env file found — nothing to back up"
 fi
 
 # Clean up existing app directory
-echo "Removing existing app directory: $APP_DIR"
-rm -rf "$APP_DIR"
+# echo "Removing existing app directory: $APP_DIR"
+# rm -rf "$APP_DIR"
 
 echo "Creating new app directory and copying files..."
 mkdir -p "$APP_DIR"
-rsync -av "$DEPLOY_DIR/" "$APP_DIR/"
+rsync -av --exclude='.env' "$DEPLOY_DIR/" "$APP_DIR/"
 echo "Files copied using rsync."
 
 # --- Restore .env if backup exists ---
