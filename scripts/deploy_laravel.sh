@@ -130,7 +130,7 @@ fi
 # Laravel setup
 echo "Running Laravel setup..."
 git config --global --add safe.directory /var/www/html/project480
-
+chown -R www-data:www-data /var/www/html/project480
 export COMPOSER_ALLOW_SUPERUSER=1
 # /usr/local/bin/composer install --no-dev --optimize-autoloader
 composer install --no-dev --optimize-autoloader
