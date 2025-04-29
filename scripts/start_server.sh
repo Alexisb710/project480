@@ -6,3 +6,5 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Attempting to restart Apache server..."
 systemctl restart apache2
 echo "Apache restart command executed."
+
+sleep 5
