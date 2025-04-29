@@ -136,7 +136,8 @@ git config --global --add safe.directory /var/www/html/project480
 
 cd "$APP_DIR"
 # /usr/local/bin/composer install --no-dev --optimize-autoloader
-timeout 120 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+rm -rf vendor/
+timeout 240 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 chown -R www-data:www-data /var/www/html/project480
 # echo "Generating APP_KEY..."
 # php artisan key:generate --force # Generates and automatically adds/updates APP_KEY in .env
