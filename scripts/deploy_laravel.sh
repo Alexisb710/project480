@@ -127,21 +127,25 @@ fi
 # done
 # echo ".env population attempt complete."
 
-# Laravel setup
-echo "Running Laravel setup..."
-export COMPOSER_ALLOW_SUPERUSER=1
+# ============================
 
-chown -R www-data:www-data /var/www/html/project480
-git config --global --add safe.directory /var/www/html/project480
+# # Laravel setup
+# echo "Running Laravel setup..."
+# export COMPOSER_ALLOW_SUPERUSER=1
 
-cd "$APP_DIR"
-# /usr/local/bin/composer install --no-dev --optimize-autoloader
-# Clean old vendor and cache
-echo "Cleaning vendor and cache..."
-rm -rf /var/www/html/project480/vendor
-rm -f /var/www/html/project480/bootstrap/cache/*.php
-timeout 240 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
-chown -R www-data:www-data /var/www/html/project480
+# chown -R www-data:www-data /var/www/html/project480
+# git config --global --add safe.directory /var/www/html/project480
+
+# cd "$APP_DIR"
+# # /usr/local/bin/composer install --no-dev --optimize-autoloader
+# # Clean old vendor and cache
+# echo "Cleaning vendor and cache..."
+# rm -rf /var/www/html/project480/vendor
+# rm -f /var/www/html/project480/bootstrap/cache/*.php
+# timeout 240 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+# chown -R www-data:www-data /var/www/html/project480
+
+# ============================
 # echo "Generating APP_KEY..."
 # php artisan key:generate --force # Generates and automatically adds/updates APP_KEY in .env
 # echo "APP_KEY generated."
