@@ -136,7 +136,10 @@ git config --global --add safe.directory /var/www/html/project480
 
 cd "$APP_DIR"
 # /usr/local/bin/composer install --no-dev --optimize-autoloader
-rm -rf vendor/
+# Clean old vendor and cache
+echo "Cleaning vendor and cache..."
+rm -rf /var/www/html/project480/vendor
+rm -f /var/www/html/project480/bootstrap/cache/*.php
 timeout 240 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 chown -R www-data:www-data /var/www/html/project480
 # echo "Generating APP_KEY..."
