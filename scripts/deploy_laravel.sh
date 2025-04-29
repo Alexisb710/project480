@@ -152,16 +152,16 @@ fi
 # --- End .env file creation and population ---
 
 # Permissions
-echo "Setting permissions..."
-chown -R www-data:www-data .
-chmod 640 .env
-chmod -R 775 storage bootstrap/cache
+# echo "Setting permissions..."
+# chown -R www-data:www-data .
+# chmod 640 .env
+# chmod -R 775 storage bootstrap/cache
 
-# php artisan migrate --force
-php artisan config:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+# # php artisan migrate --force
+# php artisan config:clear
+# php artisan config:cache
+# php artisan route:cache
+# php artisan view:cache
 
 # # Restart Apache - Remove this because it was likely causing CodeDeploy to fail
 # echo "Restarting Apache server..."
