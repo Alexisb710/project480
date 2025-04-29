@@ -152,8 +152,8 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Restart Apache
-echo "Restarting Apache server..."
-systemctl restart apache2
+# # Restart Apache - Remove this because it was likely causing CodeDeploy to fail
+# echo "Restarting Apache server..."
+# systemctl restart apache2
 
 echo "Deployment script finished successfully."
