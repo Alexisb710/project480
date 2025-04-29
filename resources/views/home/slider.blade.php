@@ -9,7 +9,7 @@
                   <div class="detail-box"> 
                     <h1>
                       Adventures and <br>
-                      Sportingssssss
+                      Sportings
                     </h1>
                     <p>
                       Welcome to your ultimate destination for premium sports and fitness gear and accessories. Whether you're a seasoned athlete or just starting your wellness journey, we've got everything you need to fuel your passion. Let's make your sports and fitness goals a reality — start shopping today! 
