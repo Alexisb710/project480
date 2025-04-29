@@ -129,15 +129,18 @@ fi
 
 # Laravel setup
 echo "Running Laravel setup..."
-git config --global --add safe.directory /var/www/html/project480
-chown -R www-data:www-data /var/www/html/project480
 export COMPOSER_ALLOW_SUPERUSER=1
-# /usr/local/bin/composer install --no-dev --optimize-autoloader
-composer install --no-dev --optimize-autoloader
 
-echo "Generating APP_KEY..."
-php artisan key:generate --force # Generates and automatically adds/updates APP_KEY in .env
-echo "APP_KEY generated."
+chown -R www-data:www-data /var/www/html/project480
+git config --global --add safe.directory /var/www/html/project480
+
+cd "$APP_DIR"
+# /usr/local/bin/composer install --no-dev --optimize-autoloader
+timeout 120 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+chown -R www-data:www-data /var/www/html/project480
+# echo "Generating APP_KEY..."
+# php artisan key:generate --force # Generates and automatically adds/updates APP_KEY in .env
+# echo "APP_KEY generated."
 # --- End .env file creation and population ---
 
 # Permissions
