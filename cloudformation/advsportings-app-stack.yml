@@ -57,6 +57,15 @@ Resources:
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:DeleteObject
+                Resource:
+                  - arn:aws:s3:::citprojectbucket/products/*
+                  - arn:aws:s3:::citprojectbucket
+                  - arn:aws:s3:::citprojectbucket/*
               # Permission to get the DB password secret
               - Effect: Allow
                 Action: secretsmanager:GetSecretValue

@@ -2,7 +2,7 @@
 <html>
   <head> 
     @include('admin.css')
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style type="text/css">
       .div_design {
         display: flex;
