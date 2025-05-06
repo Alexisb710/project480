@@ -93,7 +93,8 @@ class AdminController extends Controller
             }
 
             // Upload the new image to S3 with public-read access
-            $path = Storage::disk('s3')->putFileAs('products', $image, $imageName, 'public');
+            // $path = Storage::disk('s3')->putFileAs('products', $image, $imageName, 'public');
+            $path = Storage::disk('s3')->putFileAs('products', $image, $imageName);
 
             // Save the S3 image path in the database
             $product->image = 'products/' . $imageName;
