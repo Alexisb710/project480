@@ -156,6 +156,7 @@ fi
 # chown -R www-data:www-data .
 # chmod 640 .env
 # chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data /var/www/html/project480
 
 # # php artisan migrate --force
 # php artisan config:clear
