@@ -68,6 +68,7 @@ class AdminController extends Controller
     }
 
     public function upload_product(Request $request) {
+        try {
         $product = new Product;
         $product->title = $request->title;
         $product->description = $request->description;
@@ -104,6 +105,15 @@ class AdminController extends Controller
         toastr()->timeOut(5000)->closeButton()->success('Product Added Successfully');
 
         return redirect()->back();
+
+    } catch (\Exception $e) {
+        // ✅ Log to Laravel log file
+        Log::error('Product upload failed: ' . $e->getMessage());
+
+        // ✅ Optional: Show plain error for now
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+
     }
 
     public function view_product(){
