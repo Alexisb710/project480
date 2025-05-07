@@ -5,15 +5,21 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "Validating service status..."
 
-# Check if Apache is listening on port 80
-if ! netstat -tulnp | grep ':80 ' | grep -q 'apache2'; then
+# Check if Apache is listening on port 80 using `ss`
+if ! ss -tuln | grep -q ':80'; then
   echo "ERROR: Apache does not appear to be listening on port 80."
   exit 1
 fi
-echo "Apache process found listening on port 80."
+echo "Apache appears to be listening on port 80."
 
-# Check if the homepage loads locally (adjust URL if needed)
-# The '-f' flag makes curl fail fast on server errors (HTTP >= 400)
+# Check if the apache2 process is running
+if ! pgrep -x apache2 > /dev/null; then
+  echo "ERROR: apache2 process not running."
+  exit 1
+fi
+echo "apache2 process is running."
+
+# Check if the homepage loads
 if ! curl -f http://localhost/; then
   echo "ERROR: curl failed to retrieve http://localhost/"
   exit 1
